@@ -1,0 +1,20 @@
+name: Bug report
+description: Report a client or integration problem without secrets.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the command/tool and expected behavior. Remove API keys and private account details.
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: Agent client and version
+      placeholder: e.g. Cursor version, Claude Code version, or CLI
+  - type: textarea
+    id: error
+    attributes:
+      label: Safe error code and reproduction steps
+      description: Never paste Authorization headers, environment dumps or .env files.

@@ -1,0 +1,19 @@
+name: Package
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.10.0'
+          python-version: '3.10'
+      - run: uv sync --locked
+      - run: uv run python -m compileall -q src examples
+      - run: uv run influence-client --help
+      - run: uv build
