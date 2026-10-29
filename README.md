@@ -70,7 +70,7 @@ Actual website view from2026-10-28, using the2026-W44 publication. This is a pro
 
 | Platform | Available data | Cadence / coverage |
 | --- | --- | --- |
-| **X** | Influence and per-handle six-pool ranks, profiles/history, Smart Followers Top10, monitored social events, abilities, weekly trends | Daily influence source; AI/Web3 × global/en/cn. Attention is Web3 cn/en only |
+| **X** | Influence and per-handle six-pool ranks, profiles/history, Smart Followers Top10, monitored social events, bilateral Circle Top10, abilities, weekly trends | Daily influence source; AI/Web3 × global/en/cn. Attention is Web3 cn/en only |
 | **Binance Square** | Influence ranks, profiles, abilities, weekly follower or smart-follower gains | Daily collection; weekly growth requires a comparable seven-day observation baseline |
 | **YouTube** | AI and Web3 channel ranks, subscriber counts, scores and basic metrics | Weekly published reports; Web3 maps to the collector’s Crypto category |
 
@@ -99,6 +99,7 @@ uv run influence-client x --sector web3 --region cn --limit 10
 uv run influence-client ranks cz_binance
 uv run influence-client smart-followers cz_binance --sector web3
 uv run influence-client social cz_binance --limit 2
+uv run influence-client circle cz_binance --days 7
 uv run influence-client profile-history cz_binance
 
 # Run local stdio MCP (also the default when no command is supplied)
@@ -143,3 +144,5 @@ The client sends read-only requests to `https://mcp.xhunt.ai` by default. It doe
 [Architecture and security →](docs/architecture.md) · [Contributing →](CONTRIBUTING.md)
 
 If this helps your agent discover better creators, **star the repository** so others can find it. Useful contributions include research recipes, client configurations and translations.
+
+Circle uses recorded direct reply/quote/repost targets with at least one interaction each way, over7 days by default (1–30). Costs actual returned accounts, up to10; inspect partial coverage and evaluation window. It requires the candidate backend and explicit source configuration; production availability is not implied by client support.

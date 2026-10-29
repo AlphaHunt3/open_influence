@@ -34,6 +34,9 @@ def parser():
     social = sub.add_parser("social", help="Monitored X events; limit per type, up to4*limit credits")
     social.add_argument("handle")
     social.add_argument("--limit", type=int, default=10)
+    circle = sub.add_parser("circle", help="Observed bilateral direct interaction Top10; up to10 credits")
+    circle.add_argument("handle")
+    circle.add_argument("--days", type=int, default=7)
     abilities = sub.add_parser("abilities", help="Published X abilities >=85; one credit")
     abilities.add_argument("handle")
     abilities.add_argument("--sector", choices=["ai", "web3"], default="web3")
@@ -60,7 +63,7 @@ def parser():
 async def run(args):
     methods = {"capabilities": "capabilities", "usage": "usage", "x": "x_leaderboard", "profile": "x_profile",
                "ranks": "x_ranks", "smart-followers": "x_smart_followers",
-               "social": "x_social", "profile-history": "x_profile_history",
+               "circle": "x_circle", "social": "x_social", "profile-history": "x_profile_history",
                "abilities": "x_abilities", "weekly": "x_weekly", "square": "square_leaderboard",
                "square-profile": "square_profile", "square-abilities": "square_abilities",
                "square-weekly": "square_weekly", "youtube": "youtube_leaderboard"}

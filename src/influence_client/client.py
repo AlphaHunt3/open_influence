@@ -123,6 +123,11 @@ class InfluenceClient:
         return await self._get(f"/api/v1/kols/{identifier(handle)}/smart-followers",
                                {"sector": choice(sector, ("ai", "web3"), "sector")})
 
+    async def x_circle(self, handle, days=7):
+        if isinstance(days, bool) or not isinstance(days, int) or not 1 <= days <= 30:
+            raise InfluenceError("invalid_parameter", "days must be an integer from 1 to 30", 422)
+        return await self._get(f"/api/v1/kols/{identifier(handle)}/circle", {"days": days})
+
     async def x_social(self, handle, limit=10):
         return await self._get(f"/api/v1/kols/{identifier(handle)}/social", {"limit": count(limit)})
 

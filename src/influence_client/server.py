@@ -89,6 +89,12 @@ async def get_kol_social(handle: str, limit: Limit = 10) -> dict:
 
 
 @server.tool(annotations=READ_ONLY)
+async def get_kol_circle(handle: str, days: Annotated[int, Field(ge=1, le=30, strict=True)] = 7) -> dict:
+    """Top10 observed bilateral direct reply/quote/repost partners; default7 days. Each direction requires an interaction; costs actual returned accounts, up to10. Recorded partial coverage, not all X activity; inspect status/meta."""
+    return await call("x_circle", handle=handle, days=days)
+
+
+@server.tool(annotations=READ_ONLY)
 async def get_profile_history(handle: str) -> dict:
     """Recorded X profile snapshots and changed fields in source order. One credit per handle; not complete lifetime history."""
     return await call("x_profile_history", handle=handle)

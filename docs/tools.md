@@ -2,7 +2,7 @@
 
 Contract reviewed against the main implementation and public service on 2026-10-29. Check capabilities on the service you use for current availability. X login is configured; Gmail and Pro payments are not enabled on the public service at this check.
 
-Local stdio exposes 15 tools: the 14 hosted data/discovery tools plus **`get_usage`**, a client-side wrapper over REST. Limits are integers 1–200; local lists and social events default to 10, hosted lists to 200 and hosted social events to 20 per type. Smart Followers always returns at most 10 per pool.
+Local stdio exposes 16 tools: the 15 hosted data/discovery tools plus **`get_usage`**, a client-side wrapper over REST. Limits are integers 1–200; local lists and social events default to 10, hosted lists to 200 and hosted social events to 20 per type. Smart Followers always returns at most 10 per pool.
 
 | Local / hosted MCP tool | REST GET | Parameters | Credits |
 | --- | --- | --- | ---: |
@@ -14,6 +14,7 @@ Local stdio exposes 15 tools: the 14 hosted data/discovery tools plus **`get_usa
 | `get_kol_ranks` | `/api/v1/kols/{handle}/ranks` | handle | 1 |
 | `get_smart_followers` | `/api/v1/kols/{handle}/smart-followers` | handle, sector | actual accounts across both pools, up to 20 |
 | `get_kol_social` | `/api/v1/kols/{handle}/social` | handle, limit **per type** | actual events across four types, up to 4 × limit |
+| `get_kol_circle` | `/api/v1/kols/{handle}/circle` | handle, days=7 (1–30) | actual partners, up to10 |
 | `get_profile_history` | `/api/v1/kols/{handle}/profile-history` | handle | 1 per handle |
 | `get_ability_model` | `/api/v1/kols/{handle}/abilities` | handle, sector | 1 |
 | `get_weekly_kols` | `/api/v1/weekly/kols` | sector, region, mode, limit | returned rows |
@@ -68,6 +69,8 @@ X profiles include recorded current profile fields and known person/project and 
 
 Social covers monitored following, followed, unfollowing and unfollowed events. The limit is per event type, not a time window. Unfollows cover approximately the last hour; follow records use the source's recent-observation filter. Missing arrays are unavailable, not evidence of no activity. Profile history is recorded snapshots in source order, not lifetime coverage or inferred effective change times.
 
-Circle, a complete Following KOLs list, raw timelines/tweet search and cross-platform identity matching remain unavailable.
+A complete Following KOLs list, raw timelines/tweet search and cross-platform identity matching remain unavailable.
 
 There are no YouTube profile/ability or real-time streaming endpoints in this contract. Data cadence is not an uptime or freshness guarantee; capabilities and metadata take precedence.
+
+Circle requires the candidate backend with an explicitly configured read-only post source. It measures observed bilateral replies/quotes/reposts: at least one action each way, sorted by total unique posts, minimum directional count, then ID. Missing target posts give `partial`; this is monitored coverage and unknown ingestion freshness, never complete X activity. Query caps fail instead of silently truncating results. Production availability is deployment-dependent; inspect capabilities.

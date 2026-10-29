@@ -14,3 +14,5 @@
 - Async Python client, JSON CLI,10-row defaults and actual credit-header reporting.
 - EN/ZH documentation, agent Skill, research recipes and explicit feature boundaries.
 - Local repository/package preparation; no PyPI or GitHub release is claimed by this entry.
+
+- Add observed bilateral Circle Top10 to SDK/CLI/MCP, with bounded1–30 day window and coverage/credit semantics. Requires the corresponding backend deployment.

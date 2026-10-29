@@ -25,7 +25,7 @@ class XContractTest(unittest.IsolatedAsyncioTestCase):
 
     async def test_handle_normalization_preserves_unknowns_coverage_and_charge(self):
         for call in (self.client.x_ranks, self.client.x_smart_followers,
-                     self.client.x_social, self.client.x_profile_history):
+                     self.client.x_social, self.client.x_circle, self.client.x_profile_history):
             result = await call("@Alice")
             self.assertIn("/kols/Alice/", self.requests[-1].url.path)
             self.assertIsNone(result["data"]["kol_count"])
@@ -39,17 +39,22 @@ class XContractTest(unittest.IsolatedAsyncioTestCase):
             with self.assertRaises(InfluenceError):
                 await self.client.x_social("alice", limit=limit)
         for call in (self.client.x_ranks, self.client.x_smart_followers,
-                     self.client.x_social, self.client.x_profile_history):
+                     self.client.x_social, self.client.x_circle, self.client.x_profile_history):
             with self.assertRaises(InfluenceError):
                 await call("alice/../../usage")
         with self.assertRaises(InfluenceError):
             await self.client.x_smart_followers("alice", sector="unknown")
+        for days in (False, 0, 31, 1.5):
+            with self.assertRaises(InfluenceError):
+                await self.client.x_circle("alice", days=days)
         self.assertEqual(self.requests, [])
 
     async def test_mcp_discovery_exposes_new_contract_and_bounded_social_limit(self):
         tools = {tool.name: tool for tool in await server.list_tools()}
-        for name in ("get_kol_ranks", "get_smart_followers", "get_kol_social", "get_profile_history"):
+        for name in ("get_kol_ranks", "get_smart_followers", "get_kol_social", "get_kol_circle", "get_profile_history"):
             self.assertIn(name, tools)
+        window = tools["get_kol_circle"].inputSchema["properties"]["days"]
+        self.assertEqual((window["minimum"], window["maximum"], window["default"]), (1, 30, 7))
         limit = tools["get_kol_social"].inputSchema["properties"]["limit"]
         self.assertEqual((limit["minimum"], limit["maximum"], limit["default"]), (1, 200, 10))
 
