@@ -72,7 +72,7 @@ async def get_kol_profile(handle: str) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 async def get_kol_ranks(handle: str) -> dict:
-    """Six AI/Web3 x global/english/cn ranks and project ranks. One credit. KOL population counts remain unavailable (null)."""
+    """Six AI/Web3 x global/english/cn ranks and project ranks. One credit. Inspect kol_count_status: validated source cohorts can supply ranked-account counts including projects; missing/stale counts remain null."""
     return await call("x_ranks", handle=handle)
 
 

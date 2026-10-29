@@ -23,7 +23,7 @@ def parser():
     profile = sub.add_parser("profile", help="One X profile; one credit")
     profile.add_argument("handle")
     for name, help_text in (
-        ("ranks", "Six X sector/region ranks; KOL population counts unavailable; one credit"),
+        ("ranks", "Six X sector/region ranks and available source population counts; one credit"),
         ("profile-history", "Recorded X profile snapshots; one credit per handle"),
     ):
         command = sub.add_parser(name, help=help_text)

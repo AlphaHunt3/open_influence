@@ -48,7 +48,7 @@ Cursor、VS Code、Claude Desktop、Windsurf 及本地 stdio 配置见[接入指
 | 找YouTube创作者 | AI和Web3各前200周榜，保留订阅数、评分及数据周次 |
 | 查看擅长领域 | X和币安广场已发布的领域能力，只返回85分及以上 |
 
-X另提供每个handle的六组排名与项目排名、global/cn各Top10 Smart Followers、当前资料与已记录的资料历史、四向关注/取关事件。六组KOL总数仍为空；国际池不等于严格英语，分类未知时保留空值。Social是有限监测记录，取关约覆盖最近一小时，limit是每种事件的上限，费用最多4×limit；Smart Followers按两组实际返回人数收费，最多20。资料历史每个handle收1credit，不声称覆盖终身。
+X另提供每个handle的六组排名与项目排名、global/cn各Top10 Smart Followers、当前资料与已记录的资料历史、四向关注/取关事件。六组人数支持已完成排名批次的真实去重账号数（含项目），需部署配置快照发布器；缺失或过期时仍为空。国际池不等于严格英语，分类未知时保留空值。Social是有限监测记录，取关约覆盖最近一小时，limit是每种事件的上限，费用最多4×limit；Smart Followers按两组实际返回人数收费，最多20。资料历史每个handle收1credit，不声称覆盖终身。
 
 Following KOLs完整名单、Circle、原始timeline/推文搜索、跨平台身份匹配仍未提供。灵魂指数、灵魂榜和能力榜暂不公开。2026-10-29线上已部署个人账户和额度，X登录已配置，Gmail与Pro支付仍未启用，Pro Top500尚未实现。
 

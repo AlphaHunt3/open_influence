@@ -64,7 +64,7 @@ Lists preserve `{items, meta}` plus optional `status`/`reason`. Profiles/models 
 
 ## Coverage boundaries
 
-X profiles include recorded current profile fields and known person/project and Chinese/international classifications. Six-rank aggregates include project ranks when available, but authoritative population counts are unavailable (`kol_count=null`). Smart Followers preserves the source ordering, at most 10 per global/cn pool per sector, with unknown classifications left null. International classification does not verify English language.
+X profiles include recorded current profile fields and known person/project and Chinese/international classifications. Six-rank aggregates include project ranks when available, with population counts from fresh completed source cohorts when configured (`kol_count_scope=ranked_accounts_including_projects`). Missing/stale snapshots remain `kol_count=null`; inspect `kol_count_status` and timestamps. This publisher requires separate deployment/configuration. Smart Followers preserves the source ordering, at most 10 per global/cn pool per sector, with unknown classifications left null. International classification does not verify English language.
 
 Social covers monitored following, followed, unfollowing and unfollowed events. The limit is per event type, not a time window. Unfollows cover approximately the last hour; follow records use the source's recent-observation filter. Missing arrays are unavailable, not evidence of no activity. Profile history is recorded snapshots in source order, not lifetime coverage or inferred effective change times.
 
