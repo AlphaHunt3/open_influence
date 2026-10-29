@@ -1,6 +1,6 @@
 # Accounts, credits and billing
 
-As checked on 2026-10-29, accounts and billing are deployed and X login is configured. Gmail login and Stripe purchases remain disabled pending provider configuration; real payment has not been verified. Pro Top500 lists are not implemented.
+As checked on 2026-10-29, personal accounts/usage are deployed and X login is configured. New Pro purchases have moved to Infini; the payment gateway is deployed and the Influence candidate is verified in an isolated environment, with public Influence rollout and real payment acceptance still pending. Gmail still needs provider configuration. Pro Top500 is implemented in the candidate; production rollout remains pending.
 
 Sign in at https://mcp.xhunt.ai/account with X or a verified `@gmail.com` Google account. Create a personal API key, copy it once, and configure your agent locally. Revoking the key disables further API use. Keys are stored as hashes by the service. Browser login uses a separate HttpOnly cookie; the client does not copy it.
 
@@ -32,4 +32,6 @@ The server commits the actual result charge before releasing the data. `X-Credit
 
 Use the account website for key creation/revocation, organization applications, Checkout and subscription management. These are intentionally not agent data tools. Pro is granted from verified subscription state, not merely a successful redirect. The client cannot approve organizations, change plans or purchase credits.
 
-Pro Top500 bulk access uses the same monthly30000/daily7500 account balance and endpoint rate policy. Local client defaults to10; hosted tool defaults to500. A full500-row response costs500; a429-row limited-coverage response costs429. Active entitlement is checked server-side, including for internal credentials. Expiration or cancellation removes access without changing historical usage.
+Pro Top500 bulk access uses the same monthly30000/daily7500 account balance and endpoint rate policy. Local client defaults to10; hosted tool defaults to500. A full500-row response costs500; a429-row limited-coverage response costs429. Active entitlement is checked server-side, including for internal credentials. Expiration removes access without changing historical usage. Infini cancellation keeps access until the end of the already-paid period; an unrefreshed payment snapshot stops granting within300seconds.
+
+Infini Pro uses USD39 monthly renewal invoices. The user pays the first checkout and subsequent invoices; do not assume automatic card charging. The website collects an invoice email, offers an explicit payment-status refresh and cancellation confirmation. A redirect or pending/partial payment never grants Pro. Only current provider-verified paid periods do; no SDK/CLI/MCP tool creates or cancels payments. Existing usage is never reset by a plan change.

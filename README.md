@@ -135,7 +135,7 @@ The auth-billing service implements **1 credit per returned account/channel**. P
 
 No automatic retries, paid fan-out, purchases or account changes. A timed-out data request may already have consumed credits. On `quota_exceeded`, check usage; on `rate_limited`, pause. [Account and billing details →](docs/billing.md)
 
-As checked on 2026-10-29, personal accounts and usage are deployed and X login is configured; Gmail login and Stripe purchases still need provider configuration. Pro Top500 is implemented and verified in an isolated candidate service; production rollout remains pending. A missing billing header is reported as `null`, never as zero.
+As checked on 2026-10-29, personal accounts and usage are deployed and X login is configured; Gmail login still needs provider configuration. New purchases use Infini; the gateway is deployed, while Influence rollout and actual paid lifecycle acceptance remain pending. Pro Top500 is implemented and verified in an isolated candidate service; production rollout remains pending. A missing billing header is reported as `null`, never as zero.
 
 ## Why this repository is small
 

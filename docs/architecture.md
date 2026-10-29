@@ -29,4 +29,4 @@ Defaults:
 
 Review `src/influence_client/client.py`, `server.py`, `cli.py`, `pyproject.toml` and `uv.lock`. Dependencies are the official MCP Python SDK and httpx, plus their transitive dependencies. Report security concerns privately through the repository’s security advisory feature if enabled; never include a working key in an issue.
 
-MIT applies to this client’s code. Access to the hosted service and datasets requires separate credentials and quotas. This repository contains no raw follower graphs, tweets, comments, OAuth/Stripe secrets or server-side scoring code.
+MIT applies to this client’s code. Access to the hosted service and datasets requires separate credentials and quotas. This repository contains no raw follower graphs, tweets, comments, OAuth/payment-provider secrets or server-side scoring code.

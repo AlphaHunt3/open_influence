@@ -12,7 +12,7 @@ Completed locally:
 - Verified missing-key usage is a tool error without a credentialed request.
 - Checked relative Markdown links.
 
-No data query, login, Stripe payment or paid call was performed for this client verification. Personal account/billing endpoints in the auth-billing worktree are documented from source and are not claimed to be deployed by this repository. The client does not deploy or modify that service.
+No data query, login, provider payment or paid call was performed for this client verification. Personal account/billing endpoints in the auth-billing worktree are documented from source and are not claimed to be deployed by this repository. The client does not deploy or modify that service.
 
 Hosted REST/MCP and Chinese/English desktop/mobile website behavior were separately checked during the preceding platform integration. The included website screenshot comes from that real2026-W44 YouTube view; it is not output fabricated by this client.
 
