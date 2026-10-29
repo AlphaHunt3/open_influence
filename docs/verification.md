@@ -27,3 +27,29 @@ Validation: `PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -v` (
 2026-10-29 Circle client addition: local discovery now16 tools (15 hosted plus usage); SDK, CLI and MCP support days1–30/default7. Five mocked HTTP/contract tests passed, including Circle invalid-window rejection before requests, coverage/credit preservation, and MCP window schema. Source and deployment verification belongs to the backend progress record.
 
 Pro addition: local discovery17 tools (16 hosted plus usage). Six contract checks pass; Pro invalid parameters fail before a request, limit500 is forwarded, the local default is10, and429-row insufficient_coverage/credits survive unchanged. These mocked checks do not certify production payment or wallet linking.
+
+## Wheel installation
+
+A checkout test can pass even if the distributable has a broken entrypoint or missing files. Build a wheel, install it in a separate environment and test that installation:
+
+```sh
+uv build --wheel
+uv venv dist/installed-venv --python 3.10
+uv pip install --python dist/installed-venv/bin/python dist/*.whl
+dist/installed-venv/bin/python scripts/verify_installed_client.py --offline
+```
+
+The script rejects imports outside the interpreter's prefix. The offline variant sets an empty key and loopback base URL, checks CLI help, the SDK's missing-key behavior and a real stdio MCP initialize/list/call exchange. It verifies17 tools, no removed ability/Soul leaderboard tools, Pro default10/max500 and invalid Circle/Pro limits. No data requests or credits are used. The GitHub workflow runs this after building; it does not publish a package.
+
+For actual service verification, use an isolated API on **127.0.0.1:18893**, a personal Pro key and a separate free personal key from its isolated database. Do not use an internal bypass key, production account or real subscription. Set secrets privately in the process environment:
+
+```sh
+export XHUNT_BASE_URL=http://127.0.0.1:18893
+export XHUNT_INSTALL_TEST=1
+# Privately configure XHUNT_API_KEY and XHUNT_FREE_TEST_KEY, then:
+dist/installed-venv/bin/python scripts/verify_installed_client.py
+```
+
+This version refuses other API origins and requires explicit test opt-in. It makes actual SDK, CLI and stdio tool calls: one YouTube SDK row, one CLI Pro row, X/Square/YouTube one row each and the W44 YouTube Web3 pool429. It checks `X-Credits-Charged`, shared monthly usage increasing by434, free-key Pro403 with unchanged free usage, public discovery/usage free and invalid limits rejected. It has no retries. The429 expectation deliberately anchors the current W44 test dataset; update the verifier and evidence when an independently verified real dataset changes coverage.
+
+On2026-10-29 a fresh wheel environment (Python3.12, resolved mcp1.30.0) passed offline and isolated-live verification with17 tools and434 actual test credits. The six existing offline contract tests also remain separate checks. This proves local wheel/stdio installation against the isolated candidate, not public PyPI availability, GitHub publication or a named desktop agent UI. The configured remote still needs restored access before public delivery; do not advertise a release as published.

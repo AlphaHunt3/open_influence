@@ -135,7 +135,7 @@ The auth-billing service implements **1 credit per returned account/channel**. P
 
 No automatic retries, paid fan-out, purchases or account changes. A timed-out data request may already have consumed credits. On `quota_exceeded`, check usage; on `rate_limited`, pause. [Account and billing details →](docs/billing.md)
 
-As checked on 2026-10-29, personal accounts and usage are deployed and X login is configured; Gmail login and Stripe purchases still need provider configuration. Pro Top500 lists are not available. A missing billing header is reported as `null`, never as zero.
+As checked on 2026-10-29, personal accounts and usage are deployed and X login is configured; Gmail login and Stripe purchases still need provider configuration. Pro Top500 is implemented and verified in an isolated candidate service; production rollout remains pending. A missing billing header is reported as `null`, never as zero.
 
 ## Why this repository is small
 
@@ -147,4 +147,6 @@ If this helps your agent discover better creators, **star the repository** so ot
 
 Circle uses recorded direct reply/quote/repost targets with at least one interaction each way, over7 days by default (1–30). Costs actual returned accounts, up to10; inspect partial coverage and evaluation window. It requires the candidate backend and explicit source configuration; production availability is not implied by client support.
 
-Pro Top500: `uv run influence-client pro --platform x --sector ai --region cn --limit 10` or `get_pro_leaderboard`. Requires a server-verified active Pro entitlement; local default10, maximum500, actual accounts billed. Public endpoints stay capped at200. Check insufficient_coverage and dates. The verified W44 YouTube pool supports AI500 and429 Web3; wallet-to-Influence entitlement linking and production rollout remain separate work.
+Pro Top500: `uv run influence-client pro --platform x --sector ai --region cn --limit 10` or `get_pro_leaderboard`. Requires a server-verified active Pro entitlement; local default10, maximum500, actual accounts billed. Public endpoints stay capped at200. Check insufficient_coverage and dates. The verified W44 YouTube pool supports AI500 and429 Web3. Explicit wallet-to-Influence linking and shared Pro entitlements are implemented and isolated-tested; production configuration and rollout remain pending.
+
+Wheel installation is checked independently from editable imports: CLI entrypoint, Python SDK and an actual stdio MCP initialize/list/call exchange. CI runs the offline variant without data requests; isolated live verification additionally checks all three platforms, Pro denial and the actual credit ledger. See [verification instructions](docs/verification.md#wheel-installation).
