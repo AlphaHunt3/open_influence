@@ -153,7 +153,8 @@ class InfluenceClient:
         result = await self._get("/api/v1/binance-square/weekly/trending", {
             "limit": count(limit), "metric": choice(metric, ("followers", "smart_followers"), "metric"),
             "region": choice(region, ("global", "en", "cn"), "region")})
-        if region != "global" and (result.get("meta") or {}).get("region") != region:
+        no_history = result.get("status") in ("insufficient_history", "stale_data") and result.get("items") == []
+        if region != "global" and (result.get("meta") or {}).get("region") != region and not no_history:
             raise InfluenceError("unsupported_region", "Server did not confirm Square language filtering. Check capabilities.weekly_regions before requesting a language-specific list.")
         return result
 

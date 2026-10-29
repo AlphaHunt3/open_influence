@@ -61,6 +61,18 @@ class XContractTest(unittest.IsolatedAsyncioTestCase):
         # The original global contract remains compatible with older servers.
         await self.client.square_weekly()
 
+    async def test_old_server_history_state_is_preserved_but_never_unverified_rows(self):
+        payload = {"status": "insufficient_history", "items": [], "meta": {}}
+        await self.client._http.aclose()
+        self.client._http = httpx.AsyncClient(
+            base_url="https://example.test",
+            transport=httpx.MockTransport(lambda request: httpx.Response(200, json=payload)))
+        result = await self.client.square_weekly(region="cn")
+        self.assertEqual(result["status"], "insufficient_history")
+        payload["items"] = [{"square_uid": "unverified"}]
+        with self.assertRaises(InfluenceError):
+            await self.client.square_weekly(region="cn")
+
 
 if __name__ == "__main__":
     unittest.main()
