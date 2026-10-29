@@ -53,3 +53,23 @@ dist/installed-venv/bin/python scripts/verify_installed_client.py
 This version refuses other API origins and requires explicit test opt-in. It makes actual SDK, CLI and stdio tool calls: one YouTube SDK row, one CLI Pro row, X/Square/YouTube one row each and the W44 YouTube Web3 pool429. It checks `X-Credits-Charged`, shared monthly usage increasing by434, free-key Pro403 with unchanged free usage, public discovery/usage free and invalid limits rejected. It has no retries. The429 expectation deliberately anchors the current W44 test dataset; update the verifier and evidence when an independently verified real dataset changes coverage.
 
 On2026-10-29 a fresh wheel environment (Python3.12, resolved mcp1.30.0) passed offline and isolated-live verification with17 tools and434 actual test credits. The six existing offline contract tests also remain separate checks. This proves local wheel/stdio installation against the isolated candidate, not public PyPI availability, GitHub publication or a named desktop agent UI. The configured remote still needs restored access before public delivery; do not advertise a release as published.
+
+
+## Minimum Python and source-distribution acceptance — 2026-10-29
+
+The package advertises Python >=3.10. Python3.10.19 now passes the six offline contracts using `uv sync --locked` in a separate environment. Its independent wheel installation also passes the actual CLI/SDK/stdio offline verifier:17 tools, valid schema limits and0 data credits.
+
+An archive-to-source comparison found that the existing local `.tar.gz` still contained older client/CLI/MCP sources and documentation, while the wheel matched current sources. Nothing was published. Rebuild **both** artifacts with `uv build`, rather than treating an old same-version archive as the current release. This command builds the wheel from the newly generated source distribution.
+
+Fresh source-distribution installations on Python3.10.19 and3.12.3 both pass the same independent offline verifier. Installation resolves the dependencies allowed by each interpreter (mcp1.30.0 in both); it is deliberately separate from the locked source-contract environment. The package workflow now covers Python3.10/3.12 × wheel/sdist, building fresh artifacts in each job. GitHub execution is still pending repository access; local results do not assert remote CI success.
+
+To check the source distribution separately:
+
+```sh
+uv build
+uv venv dist/installed-sdist-venv --python 3.10
+uv pip install --python dist/installed-sdist-venv/bin/python dist/influence_client-0.1.0.tar.gz
+dist/installed-sdist-venv/bin/python scripts/verify_installed_client.py --offline
+```
+
+The current artifacts contain the MIT license and have been inspected for matching package sources. These checks make no public release, real OAuth, payment, data-call or named desktop-app certification claim. Restore the intended GitHub remote/access before publishing or announcing an install channel.
