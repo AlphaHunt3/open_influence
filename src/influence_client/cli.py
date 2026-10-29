@@ -22,6 +22,18 @@ def parser():
     x.add_argument("--limit", type=int, default=10)
     profile = sub.add_parser("profile", help="One X profile; one credit")
     profile.add_argument("handle")
+    for name, help_text in (
+        ("ranks", "Six X sector/region ranks; KOL population counts unavailable; one credit"),
+        ("profile-history", "Recorded X profile snapshots; one credit per handle"),
+    ):
+        command = sub.add_parser(name, help=help_text)
+        command.add_argument("handle")
+    followers = sub.add_parser("smart-followers", help="X global/cn Top10 followers; up to20 credits")
+    followers.add_argument("handle")
+    followers.add_argument("--sector", choices=["ai", "web3"], default="web3")
+    social = sub.add_parser("social", help="Monitored X events; limit per type, up to4*limit credits")
+    social.add_argument("handle")
+    social.add_argument("--limit", type=int, default=10)
     abilities = sub.add_parser("abilities", help="Published X abilities >=85; one credit")
     abilities.add_argument("handle")
     abilities.add_argument("--sector", choices=["ai", "web3"], default="web3")
@@ -46,6 +58,8 @@ def parser():
 
 async def run(args):
     methods = {"capabilities": "capabilities", "usage": "usage", "x": "x_leaderboard", "profile": "x_profile",
+               "ranks": "x_ranks", "smart-followers": "x_smart_followers",
+               "social": "x_social", "profile-history": "x_profile_history",
                "abilities": "x_abilities", "weekly": "x_weekly", "square": "square_leaderboard",
                "square-profile": "square_profile", "square-abilities": "square_abilities",
                "square-weekly": "square_weekly", "youtube": "youtube_leaderboard"}

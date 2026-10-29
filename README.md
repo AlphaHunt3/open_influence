@@ -70,7 +70,7 @@ Actual website view from2026-10-28, using the2026-W44 publication. This is a pro
 
 | Platform | Available data | Cadence / coverage |
 | --- | --- | --- |
-| **X** | Influence ranks, profiles, abilities, weekly rank gains, attention, Top200 entries versus baseline | Daily influence source; AI/Web3 × global/en/cn. Attention is Web3 cn/en only |
+| **X** | Influence and per-handle six-pool ranks, profiles/history, Smart Followers Top10, monitored social events, abilities, weekly trends | Daily influence source; AI/Web3 × global/en/cn. Attention is Web3 cn/en only |
 | **Binance Square** | Influence ranks, profiles, abilities, weekly follower or smart-follower gains | Daily collection; weekly growth requires a comparable seven-day observation baseline |
 | **YouTube** | AI and Web3 channel ranks, subscriber counts, scores and basic metrics | Weekly published reports; Web3 maps to the collector’s Crypto category |
 
@@ -94,6 +94,12 @@ uv run influence-client usage
 uv run influence-client youtube --sector ai --limit 10
 uv run influence-client square --limit 10
 uv run influence-client x --sector web3 --region cn --limit 10
+
+# X per-handle queries (social limit is per event type)
+uv run influence-client ranks cz_binance
+uv run influence-client smart-followers cz_binance --sector web3
+uv run influence-client social cz_binance --limit 2
+uv run influence-client profile-history cz_binance
 
 # Run local stdio MCP (also the default when no command is supplied)
 uv run influence-client serve
@@ -119,7 +125,7 @@ asyncio.run(main())
 
 ## Credits, without surprises
 
-The auth-billing service implements **1 credit per returned account/channel**. Profiles and ability models cost 1; a list of 10 costs 10. Errors, empty results, capabilities and usage queries cost 0. Repeated reads still cost credits.
+The auth-billing service implements **1 credit per returned account/channel**. Profiles, rank aggregates, profile history and ability models cost 1 per handle; Smart Followers costs actual returned accounts across both pools, social costs actual events across four types; a list of 10 costs 10. Errors, empty results, capabilities and usage queries cost 0. Repeated reads still cost credits.
 
 - Free monthly allowance: **1,000–8,000**, depending on XHunt rank; Gmail starts at **1,000**.
 - Pro: **$39/month for 30,000 credits**. Approved organizations can receive extra free-plan credits.
@@ -128,7 +134,7 @@ The auth-billing service implements **1 credit per returned account/channel**. P
 
 No automatic retries, paid fan-out, purchases or account changes. A timed-out data request may already have consumed credits. On `quota_exceeded`, check usage; on `rate_limited`, pause. [Account and billing details →](docs/billing.md)
 
-These policies describe the auth-billing implementation; the public service must deploy and configure that version to enable personal login, subscriptions and usage. A missing billing header is reported as `null`, never as zero.
+As checked on 2026-10-29, personal accounts and usage are deployed and X login is configured; Gmail login and Stripe purchases still need provider configuration. Pro Top500 lists are not available. A missing billing header is reported as `null`, never as zero.
 
 ## Why this repository is small
 

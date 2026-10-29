@@ -66,8 +66,32 @@ async def get_leaderboard(sector: Sector = "web3", region: Region = "global", li
 
 @server.tool(annotations=READ_ONLY)
 async def get_kol_profile(handle: str) -> dict:
-    """X account name, handle and available profile fields. One credit. Not a full social graph or history endpoint."""
+    """X current recorded profile and person/project, Chinese/international classifications when known. One credit."""
     return await call("x_profile", handle=handle)
+
+
+@server.tool(annotations=READ_ONLY)
+async def get_kol_ranks(handle: str) -> dict:
+    """Six AI/Web3 x global/english/cn ranks and project ranks. One credit. KOL population counts remain unavailable (null)."""
+    return await call("x_ranks", handle=handle)
+
+
+@server.tool(annotations=READ_ONLY)
+async def get_smart_followers(handle: str, sector: Sector = "web3") -> dict:
+    """Top10 global and Chinese KOL followers per sector, with known classifications. Actual returned accounts cost credits, up to20; international does not mean verified English."""
+    return await call("x_smart_followers", handle=handle, sector=sector)
+
+
+@server.tool(annotations=READ_ONLY)
+async def get_kol_social(handle: str, limit: Limit = 10) -> dict:
+    """Monitored following/followed/unfollowing/unfollowed events. Limit is per type; up to4*limit credits. Unfollows cover roughly one hour; inspect coverage."""
+    return await call("x_social", handle=handle, limit=limit)
+
+
+@server.tool(annotations=READ_ONLY)
+async def get_profile_history(handle: str) -> dict:
+    """Recorded X profile snapshots and changed fields in source order. One credit per handle; not complete lifetime history."""
+    return await call("x_profile_history", handle=handle)
 
 
 @server.tool(annotations=READ_ONLY)

@@ -116,6 +116,19 @@ class InfluenceClient:
     async def x_profile(self, handle):
         return await self._get(f"/api/v1/kols/{identifier(handle)}")
 
+    async def x_ranks(self, handle):
+        return await self._get(f"/api/v1/kols/{identifier(handle)}/ranks")
+
+    async def x_smart_followers(self, handle, sector="web3"):
+        return await self._get(f"/api/v1/kols/{identifier(handle)}/smart-followers",
+                               {"sector": choice(sector, ("ai", "web3"), "sector")})
+
+    async def x_social(self, handle, limit=10):
+        return await self._get(f"/api/v1/kols/{identifier(handle)}/social", {"limit": count(limit)})
+
+    async def x_profile_history(self, handle):
+        return await self._get(f"/api/v1/kols/{identifier(handle)}/profile-history")
+
     async def x_abilities(self, handle, sector="web3"):
         return await self._get(f"/api/v1/kols/{identifier(handle)}/abilities", {"sector": choice(sector, ("ai", "web3"), "sector")})
 

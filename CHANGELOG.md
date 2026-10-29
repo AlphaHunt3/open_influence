@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Add X per-handle ranks, Smart Followers, social events and profile history to SDK, CLI and local MCP.
+- Align coverage and billing documentation with the deployed contract.
+
 ## 0.1.0 — prepared2026-10-28
 
 - Hosted MCP connection instructions for X, Binance Square and YouTube.

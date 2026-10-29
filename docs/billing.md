@@ -1,6 +1,6 @@
 # Accounts, credits and billing
 
-This document describes the implementation in the auth-billing worktree. Actual login providers and Stripe purchases require deployment and provider credentials; it is not a claim that a real payment has been verified.
+As checked on 2026-10-29, accounts and billing are deployed and X login is configured. Gmail login and Stripe purchases remain disabled pending provider configuration; real payment has not been verified. Pro Top500 lists are not implemented.
 
 Sign in at https://mcp.xhunt.ai/account with X or a verified `@gmail.com` Google account. Create a personal API key, copy it once, and configure your agent locally. Revoking the key disables further API use. Keys are stored as hashes by the service. Browser login uses a separate HttpOnly cookie; the client does not copy it.
 
@@ -16,7 +16,7 @@ Sign in at https://mcp.xhunt.ai/account with X or a verified `@gmail.com` Google
 
 X rank is refreshed on login and checked against the immutable X identity. Pro replaces the free allowance. Organization grants augment free accounts; they are not stacked on top of Pro. Used credits are retained when the plan changes. Resets use UTC calendar days/months, not a rolling 30-day purchase window.
 
-One successfully returned account/channel costs 1 credit. A profile or ability model costs 1, even if it contains multiple fields/domains. Lists cost actual returned rows, not the requested limit. Errors, empty lists, public metadata, protocol operations and usage queries cost zero credits. These still may count toward authenticated request rate limits. Repeating a read is a new billable request.
+One successfully returned account/channel costs 1 credit. A profile or ability model costs 1, even if it contains multiple fields/domains. Rank aggregates and profile history cost 1 per handle. Smart Followers costs the total accounts across both pools (up to 20); social costs actual events across all four types (up to 4 × limit, since limit is per type). Lists cost actual returned rows, not the requested limit. Errors, empty lists, public metadata, protocol operations and usage queries cost zero credits. These still may count toward authenticated request rate limits. Repeating a read is a new billable request.
 
 Daily/monthly counters, keys and equivalent REST/MCP calls share the account’s ledger. Each endpoint allows100 requests per rolling60 seconds per account. Rotating keys or requesting another handle does not bypass it. Square’s alias shares the canonical endpoint counter.
 
