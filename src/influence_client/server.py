@@ -65,6 +65,12 @@ async def get_leaderboard(sector: Sector = "web3", region: Region = "global", li
 
 
 @server.tool(annotations=READ_ONLY)
+async def get_pro_leaderboard(platform: Literal["x", "binance-square", "youtube"] = "x", sector: Sector = "web3", region: Region = "global", limit: Annotated[int, Field(ge=1, le=500)] = 10) -> dict:
+    """Pro-only Top500; actual returned accounts cost credits. Active server-verified entitlement required; up to500, default10. Regional pools only for X. Inspect insufficient_coverage and source dates; never fill missing ranks."""
+    return await call("pro_leaderboard", platform=platform, sector=sector, region=region, limit=limit)
+
+
+@server.tool(annotations=READ_ONLY)
 async def get_kol_profile(handle: str) -> dict:
     """X current recorded profile and person/project, Chinese/international classifications when known. One credit."""
     return await call("x_profile", handle=handle)

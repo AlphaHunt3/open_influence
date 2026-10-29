@@ -16,3 +16,5 @@
 - Local repository/package preparation; no PyPI or GitHub release is claimed by this entry.
 
 - Add observed bilateral Circle Top10 to SDK/CLI/MCP, with bounded1–30 day window and coverage/credit semantics. Requires the corresponding backend deployment.
+
+- Add Pro three-platform Top500 to SDK/CLI/MCP with server entitlement requirements, max500 and explicit limited coverage.

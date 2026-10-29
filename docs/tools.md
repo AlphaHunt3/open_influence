@@ -2,7 +2,7 @@
 
 Contract reviewed against the main implementation and public service on 2026-10-29. Check capabilities on the service you use for current availability. X login is configured; Gmail and Pro payments are not enabled on the public service at this check.
 
-Local stdio exposes 16 tools: the 15 hosted data/discovery tools plus **`get_usage`**, a client-side wrapper over REST. Limits are integers 1–200; local lists and social events default to 10, hosted lists to 200 and hosted social events to 20 per type. Smart Followers always returns at most 10 per pool.
+Local stdio exposes 17 tools: the 16 hosted data/discovery tools plus **`get_usage`**, a client-side wrapper over REST. Public limits are integers 1–200; Pro limits are 1–500; local lists and social events default to 10, hosted lists to 200 and hosted social events to 20 per type. Smart Followers always returns at most 10 per pool.
 
 | Local / hosted MCP tool | REST GET | Parameters | Credits |
 | --- | --- | --- | ---: |
@@ -10,6 +10,7 @@ Local stdio exposes 16 tools: the 15 hosted data/discovery tools plus **`get_usa
 | `get_usage` **local only** | `/api/v1/usage` | none | 0 |
 | `get_leaderboard` | `/api/v1/leaderboards/influence` | sector, region, limit; kind=influence | returned rows |
 | `get_leaderboard` | `/api/v1/leaderboards/weekly-growth` | sector, region, limit; kind=weekly_growth | returned rows |
+| `get_pro_leaderboard` | `/api/v1/pro/leaderboards/{platform}` | platform=x/binance-square/youtube, sector, region (X only), limit | active Pro required; actual accounts, up to500 |
 | `get_kol_profile` | `/api/v1/kols/{handle}` | X handle | 1 |
 | `get_kol_ranks` | `/api/v1/kols/{handle}/ranks` | handle | 1 |
 | `get_smart_followers` | `/api/v1/kols/{handle}/smart-followers` | handle, sector | actual accounts across both pools, up to 20 |
@@ -74,3 +75,5 @@ A complete Following KOLs list, raw timelines/tweet search and cross-platform id
 There are no YouTube profile/ability or real-time streaming endpoints in this contract. Data cadence is not an uptime or freshness guarantee; capabilities and metadata take precedence.
 
 Circle requires the candidate backend with an explicitly configured read-only post source. It measures observed bilateral replies/quotes/reposts: at least one action each way, sorted by total unique posts, minimum directional count, then ID. Missing target posts give `partial`; this is monitored coverage and unknown ingestion freshness, never complete X activity. Query caps fail instead of silently truncating results. Production availability is deployment-dependent; inspect capabilities.
+
+Pro uses a server-verified active entitlement. Local default10, hosted default500; ordinary endpoints stay capped at200. Free, canceled or expired accounts receive pro_required; internal credentials alone do not grant Pro. YouTube uses verified eligible pool_rank values, never re-sorts or relaxes eligibility. Inspect insufficient_coverage, available_count and source dates; the archived W44 source supports AI500 but only429 Web3 ranks. Production availability and wallet-account linking are separate deployment/work items.

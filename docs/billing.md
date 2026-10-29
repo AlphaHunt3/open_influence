@@ -31,3 +31,5 @@ This returns `plan`, `monthly_cap`, `daily_cap`, `monthly_used`, `monthly_remain
 The server commits the actual result charge before releasing the data. `X-Credits-Charged` is surfaced locally as `_client.credits_charged`; a missing header is `null`. Timeouts are ambiguous: the server may already have charged. The client never retries data calls or automatically fetches a second platform.
 
 Use the account website for key creation/revocation, organization applications, Checkout and subscription management. These are intentionally not agent data tools. Pro is granted from verified subscription state, not merely a successful redirect. The client cannot approve organizations, change plans or purchase credits.
+
+Pro Top500 bulk access uses the same monthly30000/daily7500 account balance and endpoint rate policy. Local client defaults to10; hosted tool defaults to500. A full500-row response costs500; a429-row limited-coverage response costs429. Active entitlement is checked server-side, including for internal credentials. Expiration or cancellation removes access without changing historical usage.

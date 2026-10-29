@@ -146,3 +146,5 @@ The client sends read-only requests to `https://mcp.xhunt.ai` by default. It doe
 If this helps your agent discover better creators, **star the repository** so others can find it. Useful contributions include research recipes, client configurations and translations.
 
 Circle uses recorded direct reply/quote/repost targets with at least one interaction each way, over7 days by default (1–30). Costs actual returned accounts, up to10; inspect partial coverage and evaluation window. It requires the candidate backend and explicit source configuration; production availability is not implied by client support.
+
+Pro Top500: `uv run influence-client pro --platform x --sector ai --region cn --limit 10` or `get_pro_leaderboard`. Requires a server-verified active Pro entitlement; local default10, maximum500, actual accounts billed. Public endpoints stay capped at200. Check insufficient_coverage and dates. The verified W44 YouTube pool supports AI500 and429 Web3; wallet-to-Influence entitlement linking and production rollout remain separate work.

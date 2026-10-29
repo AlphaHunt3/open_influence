@@ -20,6 +20,11 @@ def parser():
     x.add_argument("--sector", choices=["ai", "web3"], default="web3")
     x.add_argument("--region", choices=["global", "en", "cn"], default="global")
     x.add_argument("--limit", type=int, default=10)
+    pro = sub.add_parser("pro", help="Pro-only Top500, actual returned accounts charged; default10")
+    pro.add_argument("--platform", choices=["x", "binance-square", "youtube"], default="x")
+    pro.add_argument("--sector", choices=["ai", "web3"], default="web3")
+    pro.add_argument("--region", choices=["global", "en", "cn"], default="global")
+    pro.add_argument("--limit", type=int, default=10)
     profile = sub.add_parser("profile", help="One X profile; one credit")
     profile.add_argument("handle")
     for name, help_text in (
@@ -62,7 +67,7 @@ def parser():
 
 async def run(args):
     methods = {"capabilities": "capabilities", "usage": "usage", "x": "x_leaderboard", "profile": "x_profile",
-               "ranks": "x_ranks", "smart-followers": "x_smart_followers",
+               "pro": "pro_leaderboard", "ranks": "x_ranks", "smart-followers": "x_smart_followers",
                "circle": "x_circle", "social": "x_social", "profile-history": "x_profile_history",
                "abilities": "x_abilities", "weekly": "x_weekly", "square": "square_leaderboard",
                "square-profile": "square_profile", "square-abilities": "square_abilities",

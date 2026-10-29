@@ -50,7 +50,7 @@ Cursor、VS Code、Claude Desktop、Windsurf 及本地 stdio 配置见[接入指
 
 X另提供每个handle的六组排名与项目排名、global/cn各Top10 Smart Followers、当前资料与已记录的资料历史、四向关注/取关事件。六组人数支持已完成排名批次的真实去重账号数（含项目），需部署配置快照发布器；缺失或过期时仍为空。国际池不等于严格英语，分类未知时保留空值。Social是有限监测记录，取关约覆盖最近一小时，limit是每种事件的上限，费用最多4×limit；Smart Followers按两组实际返回人数收费，最多20。资料历史每个handle收1credit，不声称覆盖终身。
 
-Following KOLs完整名单、原始timeline/推文搜索、跨平台身份匹配仍未提供。灵魂指数、灵魂榜和能力榜暂不公开。2026-10-29线上已部署个人账户和额度，X登录已配置，Gmail与Pro支付仍未启用，Pro Top500尚未实现。
+Following KOLs完整名单、原始timeline/推文搜索、跨平台身份匹配仍未提供。灵魂指数、灵魂榜和能力榜暂不公开。2026-10-29线上已部署个人账户和额度，X登录已配置，Gmail与Pro支付仍未启用，Pro Top500服务端和客户端已实现待部署，kol钱包身份与Influence权益仍待绑定。
 
 ## 本地客户端
 
@@ -106,3 +106,5 @@ X的`en`是国际来源池，并非严格英文筛选。新进入榜单包含重
 币安周增长榜新增 `square-weekly --region cn`（或 `en`），在全站影响力Top1000候选中先筛语言再截取。需要服务端部署2026-10-29新增的region支持；先检查capabilities中的weekly_regions，旧服务可能忽略此参数。历史不足时仍无结果。
 
 Circle：`uv run influence-client circle cz_binance --days 7`，或MCP `get_kol_circle`。默认7天、可选1至30天，返回最多10个双向回复/引用/转推账号，每个方向至少有一次互动；按双方唯一互动帖总数、较小方向计数、账号ID排序。按实际人数收费，最多10 credits。仅覆盖已记录帖子，目标缺失返回partial，不推断完整X活跃情况；查询超限会失败，不返回截断榜单。需要新版服务及显式只读源配置；目前生产部署另行安排。
+
+Pro：`uv run influence-client pro --platform x --sector ai --region cn --limit 10`，或MCP `get_pro_leaderboard`。需要有效Pro，最多500条，每个实际返回账号1 credit；本地默认10、服务端默认500。普通接口仍最多200。币安/YouTube不提供区域池。YouTube W44有效池为AI727、Web3429，AI可取500，Web3明确返回insufficient_coverage；不凑数。客户端支持不代表生产已部署或kol账号已打通。

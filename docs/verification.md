@@ -25,3 +25,5 @@ Added the four deployed X per-handle APIs to SDK, CLI and local MCP. The earlier
 Validation: `PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -v` (3 passing checks, HTTP mocked): malformed inputs fail before a billable request; unknown fields/coverage and actual charge survive SDK handling; MCP discovers the new tools and bounds social limits per type. CLI help and Python compilation also checked. No real payment or new client-app certification is claimed.
 
 2026-10-29 Circle client addition: local discovery now16 tools (15 hosted plus usage); SDK, CLI and MCP support days1–30/default7. Five mocked HTTP/contract tests passed, including Circle invalid-window rejection before requests, coverage/credit preservation, and MCP window schema. Source and deployment verification belongs to the backend progress record.
+
+Pro addition: local discovery17 tools (16 hosted plus usage). Six contract checks pass; Pro invalid parameters fail before a request, limit500 is forwarded, the local default is10, and429-row insufficient_coverage/credits survive unchanged. These mocked checks do not certify production payment or wallet linking.

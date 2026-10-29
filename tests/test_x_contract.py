@@ -58,6 +58,27 @@ class XContractTest(unittest.IsolatedAsyncioTestCase):
         limit = tools["get_kol_social"].inputSchema["properties"]["limit"]
         self.assertEqual((limit["minimum"], limit["maximum"], limit["default"]), (1, 200, 10))
 
+    async def test_pro_limits_coverage_and_discovery(self):
+        for kwargs in ({"limit": 501}, {"limit": True}, {"limit": 0}, {"platform": "youtube", "region": "cn"}, {"platform": "invalid"}):
+            with self.assertRaises(InfluenceError):
+                await self.client.pro_leaderboard(**kwargs)
+        self.assertEqual(self.requests, [])
+        await self.client.pro_leaderboard(limit=500)
+        self.assertEqual(self.requests[-1].url.path, "/api/v1/pro/leaderboards/x")
+        self.assertEqual(self.requests[-1].url.params["limit"], "500")
+        tools = {tool.name: tool for tool in await server.list_tools()}
+        schema = tools["get_pro_leaderboard"].inputSchema["properties"]
+        self.assertEqual(schema["limit"]["maximum"], 500)
+        self.assertEqual(schema["limit"]["default"], 10)
+        self.assertNotIn("ctx", schema)
+        await self.client._http.aclose()
+        payload = {"status": "insufficient_coverage", "items": [{"id": str(i)} for i in range(429)], "meta": {"tier": "pro", "source_limited": True, "available_count": 429}}
+        self.client._http = httpx.AsyncClient(base_url="https://example.test", transport=httpx.MockTransport(lambda request: httpx.Response(200, json=payload, headers={"x-credits-charged": "429"})))
+        result = await self.client.pro_leaderboard(platform="youtube", limit=500)
+        self.assertEqual(result["status"], "insufficient_coverage")
+        self.assertEqual(len(result["items"]), 429)
+        self.assertEqual(result["_client"]["credits_charged"], 429)
+
     async def test_square_old_server_cannot_masquerade_as_language_ranking(self):
         with self.assertRaises(InfluenceError) as error:
             await self.client.square_weekly(region="cn")

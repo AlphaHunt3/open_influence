@@ -26,9 +26,9 @@ def choice(value, allowed, field):
     return value
 
 
-def count(value):
-    if isinstance(value, bool) or not isinstance(value, int) or not 1 <= value <= 200:
-        raise InfluenceError("invalid_parameter", "limit must be an integer from 1 to 200", 422)
+def count(value, maximum=200):
+    if isinstance(value, bool) or not isinstance(value, int) or not 1 <= value <= maximum:
+        raise InfluenceError("invalid_parameter", f"limit must be an integer from 1 to {maximum}", 422)
     return value
 
 
@@ -112,6 +112,15 @@ class InfluenceClient:
         path = "/leaderboards/influence" if kind == "influence" else "/leaderboards/weekly-growth"
         return await self._get("/api/v1" + path, {"sector": choice(sector, ("ai", "web3"), "sector"),
             "region": choice(region, ("global", "en", "cn"), "region"), "limit": count(limit)})
+
+    async def pro_leaderboard(self, platform="x", sector="web3", region="global", limit=10):
+        choice(platform, ("x", "binance-square", "youtube"), "platform")
+        choice(sector, ("ai", "web3"), "sector")
+        choice(region, ("global", "en", "cn"), "region")
+        if platform != "x" and region != "global":
+            raise InfluenceError("invalid_parameter", "Pro regional pools apply only to X", 422)
+        return await self._get(f"/api/v1/pro/leaderboards/{platform}",
+                               {"sector": sector, "region": region, "limit": count(limit, 500)})
 
     async def x_profile(self, handle):
         return await self._get(f"/api/v1/kols/{identifier(handle)}")
