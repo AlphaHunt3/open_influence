@@ -20,7 +20,7 @@ Local stdio exposes 15 tools: the 14 hosted data/discovery tools plus **`get_usa
 | `get_binance_square_leaderboard` | `/api/v1/binance-square/leaderboard` | limit | returned rows |
 | `get_binance_square_profile` | `/api/v1/binance-square/kols/{square_uid}` | immutable UID | 1 |
 | `get_binance_square_abilities` | `/api/v1/binance-square/kols/{square_uid}/abilities` | immutable UID | 1 |
-| `get_binance_square_weekly_trending` | `/api/v1/binance-square/weekly/trending` | metric, limit | returned rows |
+| `get_binance_square_weekly_trending` | `/api/v1/binance-square/weekly/trending` | metric, limit, region | returned rows |
 | `get_youtube_leaderboard` | `/api/v1/youtube/leaderboard` | sector, limit | returned rows |
 
 The existing Square alias `/api/v1/leaderboards/binance-square` shares billing/rate counters with the canonical route. Sector is `ai` or `web3`; X region is `global`, `en` or `cn`. X handles accept an optional leading `@` in the client. Square UIDs come from leaderboard rows; they are not usernames or X handles.
@@ -34,6 +34,8 @@ The existing Square alias `/api/v1/leaderboards/binance-square` shares billing/r
 | X `mode=new_entries` | Current Top200 minus a comparable seven-day baseline | Includes re-entries; returns insufficient_history until a baseline exists |
 | Square `metric=followers` | Absolute net total follower gain over seven days | Current influence Top1000; requires measured counts at both ends |
 | Square `metric=smart_followers` | Absolute net gain in monitored source accounts following the KOL | Same candidate pool; source pool must be comparable |
+
+Square weekly `region=global|en|cn` filters published account language **before** sorting and limiting within the current global influence Top1000. English includes `en-*`, Chinese includes `cn`/`zh`/`zh-*`; unknown tags remain global-only. This parameter is added in the 2026-10-29 source changes and requires deployment; verify `weekly_regions` in capabilities before using a language-specific list. An older server may ignore the new parameter. `available_count` reports eligible growth rows before limiting, and `influence_rank` preserves global influence rank.
 
 Do not label attention as follower growth or new entries as “first discovered.” Square weekly history began on 2026-10-28; a usable seven-day baseline is expected around 2026-11-04, subject to successful collection and comparable observations. Missing counts remain unknown.
 

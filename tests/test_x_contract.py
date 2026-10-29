@@ -53,6 +53,14 @@ class XContractTest(unittest.IsolatedAsyncioTestCase):
         limit = tools["get_kol_social"].inputSchema["properties"]["limit"]
         self.assertEqual((limit["minimum"], limit["maximum"], limit["default"]), (1, 200, 10))
 
+    async def test_square_old_server_cannot_masquerade_as_language_ranking(self):
+        with self.assertRaises(InfluenceError) as error:
+            await self.client.square_weekly(region="cn")
+        self.assertEqual(error.exception.code, "unsupported_region")
+        self.assertEqual(self.requests[-1].url.params["region"], "cn")
+        # The original global contract remains compatible with older servers.
+        await self.client.square_weekly()
+
 
 if __name__ == "__main__":
     unittest.main()

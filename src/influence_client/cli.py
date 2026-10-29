@@ -50,6 +50,7 @@ def parser():
     sw = sub.add_parser("square-weekly", help="Square 7-day absolute net follower gain")
     sw.add_argument("--metric", choices=["followers", "smart_followers"], default="followers")
     sw.add_argument("--limit", type=int, default=10)
+    sw.add_argument("--region", choices=["global", "en", "cn"], default="global")
     yt = sub.add_parser("youtube", help="Weekly YouTube AI/Web3 leaderboard")
     yt.add_argument("--sector", choices=["ai", "web3"], default="web3")
     yt.add_argument("--limit", type=int, default=10)

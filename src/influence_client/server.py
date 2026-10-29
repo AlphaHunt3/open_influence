@@ -127,9 +127,9 @@ async def get_binance_square_abilities(square_uid: str) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 async def get_binance_square_weekly_trending(limit: Limit = 10,
-        metric: Literal["followers", "smart_followers"] = "followers") -> dict:
-    """Current Square Top1000 ranked by absolute net 7-day follower growth, or monitored smart-follower growth. Needs observed history. Up to limit credits."""
-    return await call("square_weekly", limit=limit, metric=metric)
+        metric: Literal["followers", "smart_followers"] = "followers", region: Region = "global") -> dict:
+    """Current global Square Top1000 ranked by net 7-day gain, filtered by published language before limiting (en includes en-*; cn includes zh-*). Needs history and a server with region support. Up to limit credits."""
+    return await call("square_weekly", limit=limit, metric=metric, region=region)
 
 
 @server.tool(annotations=READ_ONLY)

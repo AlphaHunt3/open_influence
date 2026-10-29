@@ -149,9 +149,13 @@ class InfluenceClient:
     async def square_abilities(self, square_uid):
         return await self._get(f"/api/v1/binance-square/kols/{identifier(square_uid, True)}/abilities")
 
-    async def square_weekly(self, limit=10, metric="followers"):
-        return await self._get("/api/v1/binance-square/weekly/trending", {
-            "limit": count(limit), "metric": choice(metric, ("followers", "smart_followers"), "metric")})
+    async def square_weekly(self, limit=10, metric="followers", region="global"):
+        result = await self._get("/api/v1/binance-square/weekly/trending", {
+            "limit": count(limit), "metric": choice(metric, ("followers", "smart_followers"), "metric"),
+            "region": choice(region, ("global", "en", "cn"), "region")})
+        if region != "global" and (result.get("meta") or {}).get("region") != region:
+            raise InfluenceError("unsupported_region", "Server did not confirm Square language filtering. Check capabilities.weekly_regions before requesting a language-specific list.")
+        return result
 
     async def youtube_leaderboard(self, sector="web3", limit=10):
         return await self._get("/api/v1/youtube/leaderboard", {

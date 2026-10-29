@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add Square weekly region selection (requires the corresponding server deployment).
+
 - Add X per-handle ranks, Smart Followers, social events and profile history to SDK, CLI and local MCP.
 - Align coverage and billing documentation with the deployed contract.
 
