@@ -12,7 +12,7 @@ abilities >=85. Show the source time, profile link, evidence and limits.
 Do not infer a sponsorship price or claim these creators endorsed us.
 ```
 
-Calls: one `get_leaderboard(limit=10)` + three profiles + three models. Maximum16 credits if all records are returned. Read capabilities first for0 credits. Avoid fetching all100 and then discarding90.
+Calls: one `get_leaderboard(limit=10)` + three profiles + three models. Maximum6 credits if all records are returned. Read capabilities first for0 credits. Avoid fetching all100 and then discarding90.
 
 ## Cross-platform AI watchlist
 
@@ -33,7 +33,7 @@ Explain the difference between positions gained and KOL-network attention.
 Include limitations and timestamps. Do not call either follower growth.
 ```
 
-Calls: `get_leaderboard(kind=weekly_growth,sector=web3,region=cn,limit=5)` and `get_weekly_kols(mode=attention,sector=web3,region=cn,limit=5)`. Maximum10 credits.
+Calls: `get_leaderboard(kind=weekly_growth,sector=web3,region=cn,limit=5)` and `get_weekly_kols(mode=attention,sector=web3,region=cn,limit=5)`. Zero credits.
 
 ## Square growth watch
 
@@ -45,7 +45,7 @@ follower gain. If history is insufficient, show its expected baseline
 date and stop; do not fabricate a trending list or poll repeatedly.
 ```
 
-Use `get_binance_square_weekly_trending(limit=10,metric=followers)`. Up to10 credits; an empty history-dependent result costs0. `smart_followers` is a different, monitored-network metric, not all followers.
+Use `get_binance_square_weekly_trending(limit=10,metric=followers)`. Zero credits for the ranking, including nonempty results. `smart_followers` is a different, monitored-network metric, not all followers.
 
 ## Run from a terminal
 

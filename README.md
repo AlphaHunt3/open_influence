@@ -55,7 +55,7 @@ Never include my API key in a response or a file committed to Git.
 | “Who makes influential AI or crypto videos?” | Separate weekly YouTube AI/Web3 Top100, subscriber counts and scores |
 | “What does this KOL know well?” | Published X/Square domain scores of 85 or above |
 
-**Example workflow:** discover 10 creators → inspect 3 profiles → inspect those 3 ability models → write a sourced shortlist. At most **16 credits**, if all requests return those records. [Copyable research recipes →](docs/recipes.md)
+**Example workflow:** discover 10 creators → inspect 3 profiles → inspect those 3 ability models → write a sourced shortlist. At most **6 credits**, if all requests return those records. [Copyable research recipes →](docs/recipes.md)
 
 <details>
 <summary>See a real YouTube AI leaderboard in the web playground</summary>
@@ -90,7 +90,7 @@ uv run influence-client capabilities
 # Free authenticated usage query (auth-billing service version)
 uv run influence-client usage
 
-# Up to 10 credits per list
+# Leaderboards and trending lists cost 0 credits
 uv run influence-client youtube --sector ai --limit 10
 uv run influence-client square --limit 10
 uv run influence-client x --sector web3 --region cn --limit 10
@@ -106,7 +106,7 @@ uv run influence-client profile-history cz_binance
 uv run influence-client serve
 ```
 
-Local tools default to **10 results**, support up to **200**, and report the server’s actual `X-Credits-Charged` header as `_client.credits_charged`. Hosted tools retain their server defaults; ask explicitly for `limit=10`. Local `get_usage` adds the REST usage query to MCP; it is not currently a hosted MCP tool.
+Local tools default to **10 results**, support public rankings up to **100**, social lists up to **200**, and Pro rankings up to **500**, and report the server’s actual `X-Credits-Charged` header as `_client.credits_charged`. Hosted tools retain their server defaults; ask explicitly for `limit=10`. Local `get_usage` adds the REST usage query to MCP; it is not currently a hosted MCP tool.
 
 ```python
 import asyncio
@@ -126,7 +126,7 @@ asyncio.run(main())
 
 ## Credits, without surprises
 
-The auth-billing service implements **1 credit per returned account/channel**. Profiles, rank aggregates, profile history and ability models cost 1 per handle; Smart Followers costs actual returned accounts across both pools, social costs actual events across four types; a list of 10 costs 10. Errors, empty results, capabilities and usage queries cost 0. Repeated reads still cost credits.
+The auth-billing service implements **1 credit per returned account/channel**. Profiles, rank aggregates, profile history and ability models cost 1 per handle; Smart Followers costs actual returned accounts across both pools, social costs actual events across four types; all leaderboards and trending/weekly ranking lists cost0, including Pro Top500 (active Pro is still required). Errors, empty results, capabilities and usage queries cost 0. Repeated account-data reads still cost credits; rankings remain free, including with an exhausted balance.
 
 - Free monthly allowance: **1,000–8,000**, depending on XHunt rank; Gmail starts at **1,000**.
 - Pro: **$39/month for 30,000 credits**. Approved organizations can receive extra free-plan credits.
@@ -147,6 +147,6 @@ If this helps your agent discover better creators, **star the repository** so ot
 
 Circle uses recorded direct reply/quote/repost targets with at least one interaction each way, over7 days by default (1–30). Costs actual returned accounts, up to10; inspect partial coverage and evaluation window. It requires the candidate backend and explicit source configuration; production availability is not implied by client support.
 
-Pro Top500: `uv run influence-client pro --platform x --sector ai --region cn --limit 10` or `get_pro_leaderboard`. Requires a server-verified active Pro entitlement; local default10, maximum500, actual accounts billed. Public endpoints stay capped at100. Check insufficient_coverage and dates. The verified W44 YouTube pool supports AI500 and429 Web3. Explicit wallet-to-Influence linking and shared Pro entitlements are implemented and isolated-tested; production configuration and rollout remain pending.
+Pro Top500: `uv run influence-client pro --platform x --sector ai --region cn --limit 10` or `get_pro_leaderboard`. Requires a server-verified active Pro entitlement; local default10, maximum500, zero credits charged. Public endpoints stay capped at100. Check insufficient_coverage and dates. The verified W44 YouTube pool supports AI500 and429 Web3. Explicit wallet-to-Influence linking and shared Pro entitlements are implemented and isolated-tested; production configuration and rollout remain pending.
 
 Wheel installation is checked independently from editable imports: CLI entrypoint, Python SDK and an actual stdio MCP initialize/list/call exchange. CI runs the offline variant without data requests; isolated live verification additionally checks all three platforms, Pro denial and the actual credit ledger. See [verification instructions](docs/verification.md#wheel-installation).

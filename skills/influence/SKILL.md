@@ -17,7 +17,7 @@ uv --directory "$INFLUENCE_CLIENT_DIR" run --locked influence-client youtube --s
 uv --directory "$INFLUENCE_CLIENT_DIR" run --locked influence-client square --limit 10
 ```
 
-Read capabilities before claiming coverage. Fetch at most10 rows initially unless the user requests more; cap200. One returned account/channel costs1credit; one profile/model costs1. Errors/empty lists/capabilities/usage cost0. Local `_client.credits_charged` preserves the actual response header; null means unknown. Hosted defaults may be200: explicitly send limit10. Local `get_usage` wraps REST `/api/v1/usage`; hosted MCP currently does not expose it.
+Read capabilities before claiming coverage. Fetch at most10 rows initially unless the user requests more; public ranking cap100, Pro cap500. All leaderboards and trending/weekly rankings cost0credits; active Pro is still required for Top500. Other returned account data costs1credit per account/event; one profile/model costs1. Errors/empty lists/capabilities/usage cost0. Local `_client.credits_charged` preserves the actual response header; null means unknown. Hosted public defaults are100, Pro500: explicitly send limit10. Local `get_usage` wraps REST `/api/v1/usage`; hosted MCP currently does not expose it.
 
 Select the correct measure:
 
