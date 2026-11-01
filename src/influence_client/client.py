@@ -26,7 +26,7 @@ def choice(value, allowed, field):
     return value
 
 
-def count(value, maximum=200):
+def count(value, maximum=100):
     if isinstance(value, bool) or not isinstance(value, int) or not 1 <= value <= maximum:
         raise InfluenceError("invalid_parameter", f"limit must be an integer from 1 to {maximum}", 422)
     return value
@@ -138,7 +138,7 @@ class InfluenceClient:
         return await self._get(f"/api/v1/kols/{identifier(handle)}/circle", {"days": days})
 
     async def x_social(self, handle, limit=10):
-        return await self._get(f"/api/v1/kols/{identifier(handle)}/social", {"limit": count(limit)})
+        return await self._get(f"/api/v1/kols/{identifier(handle)}/social", {"limit": count(limit, 200)})
 
     async def x_profile_history(self, handle):
         return await self._get(f"/api/v1/kols/{identifier(handle)}/profile-history")

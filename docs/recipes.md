@@ -12,7 +12,7 @@ abilities >=85. Show the source time, profile link, evidence and limits.
 Do not infer a sponsorship price or claim these creators endorsed us.
 ```
 
-Calls: one `get_leaderboard(limit=10)` + three profiles + three models. Maximum16 credits if all records are returned. Read capabilities first for0 credits. Avoid fetching all200 and then discarding190.
+Calls: one `get_leaderboard(limit=10)` + three profiles + three models. Maximum16 credits if all records are returned. Read capabilities first for0 credits. Avoid fetching all100 and then discarding90.
 
 ## Cross-platform AI watchlist
 

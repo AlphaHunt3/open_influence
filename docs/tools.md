@@ -2,7 +2,7 @@
 
 Contract reviewed against the main implementation and public service on 2026-10-29. Check capabilities on the service you use for current availability. X login is configured; Gmail and Pro payments are not enabled on the public service at this check.
 
-Local stdio exposes 17 tools: the 16 hosted data/discovery tools plus **`get_usage`**, a client-side wrapper over REST. Public limits are integers 1–200; Pro limits are 1–500; local lists and social events default to 10, hosted lists to 200 and hosted social events to 20 per type. Smart Followers always returns at most 10 per pool.
+Local stdio exposes 17 tools: the 16 hosted data/discovery tools plus **`get_usage`**, a client-side wrapper over REST. Public leaderboard limits are integers 1–100; Pro limits are 1–500; local lists and social events default to 10, hosted lists to 100 and hosted social events to 20 per type. Smart Followers always returns at most 10 per pool.
 
 | Local / hosted MCP tool | REST GET | Parameters | Credits |
 | --- | --- | --- | ---: |
@@ -76,4 +76,4 @@ There are no YouTube profile/ability or real-time streaming endpoints in this co
 
 Circle requires the candidate backend with an explicitly configured read-only post source. It measures observed bilateral replies/quotes/reposts: at least one action each way, sorted by total unique posts, minimum directional count, then ID. Missing target posts give `partial`; this is monitored coverage and unknown ingestion freshness, never complete X activity. Query caps fail instead of silently truncating results. Production availability is deployment-dependent; inspect capabilities.
 
-Pro uses a server-verified active entitlement. Local default10, hosted default500; ordinary endpoints stay capped at200. Free, canceled or expired accounts receive pro_required; internal credentials alone do not grant Pro. YouTube uses verified eligible pool_rank values, never re-sorts or relaxes eligibility. Inspect insufficient_coverage, available_count and source dates; the archived W44 source supports AI500 but only429 Web3 ranks. Production availability and wallet-account linking are separate deployment/work items.
+Pro uses a server-verified active entitlement. Local default10, hosted default500; ordinary endpoints stay capped at100. Free, canceled or expired accounts receive pro_required; internal credentials alone do not grant Pro. YouTube uses verified eligible pool_rank values, never re-sorts or relaxes eligibility. Inspect insufficient_coverage, available_count and source dates; the archived W44 source supports AI500 but only429 Web3 ranks. Production availability and wallet-account linking are separate deployment/work items.

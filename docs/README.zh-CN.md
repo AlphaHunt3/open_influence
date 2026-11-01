@@ -107,6 +107,6 @@ X的`en`是国际来源池，并非严格英文筛选。新进入榜单包含重
 
 Circle：`uv run influence-client circle cz_binance --days 7`，或MCP `get_kol_circle`。默认7天、可选1至30天，返回最多10个双向回复/引用/转推账号，每个方向至少有一次互动；按双方唯一互动帖总数、较小方向计数、账号ID排序。按实际人数收费，最多10 credits。仅覆盖已记录帖子，目标缺失返回partial，不推断完整X活跃情况；查询超限会失败，不返回截断榜单。需要新版服务及显式只读源配置；目前生产部署另行安排。
 
-Pro：`uv run influence-client pro --platform x --sector ai --region cn --limit 10`，或MCP `get_pro_leaderboard`。需要有效Pro，最多500条，每个实际返回账号1 credit；本地默认10、服务端默认500。普通接口仍最多200。币安/YouTube不提供区域池。YouTube W44有效池为AI727、Web3429，AI可取500，Web3明确返回insufficient_coverage；不凑数。两端显式钱包绑定和共享Pro权益已实现并通过隔离测试；生产配置和上线仍待完成。
+Pro：`uv run influence-client pro --platform x --sector ai --region cn --limit 10`，或MCP `get_pro_leaderboard`。需要有效Pro，最多500条，每个实际返回账号1 credit；本地默认10、服务端默认500。普通接口仍最多100。币安/YouTube不提供区域池。YouTube W44有效池为AI727、Web3429，AI可取500，Web3明确返回insufficient_coverage；不凑数。两端显式钱包绑定和共享Pro权益已实现并通过隔离测试；生产配置和上线仍待完成。
 
 新增wheel独立安装检查：验证CLI入口、Python SDK及真实stdio MCP初始化/工具发现/调用，不接受editable源码导入。CI离线模式不请求数据；隔离真实接口模式还核对三平台、免费账号拒绝Pro及实际额度账本。详见[验证步骤](verification.md#wheel-installation)。

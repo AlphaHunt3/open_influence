@@ -12,7 +12,8 @@ from .client import InfluenceClient, InfluenceError
 
 Sector = Literal["ai", "web3"]
 Region = Literal["global", "en", "cn"]
-Limit = Annotated[int, Field(ge=1, le=200)]
+Limit = Annotated[int, Field(ge=1, le=100)]
+SocialLimit = Annotated[int, Field(ge=1, le=200)]
 
 
 @asynccontextmanager
@@ -60,7 +61,7 @@ async def get_usage() -> dict:
 @server.tool(annotations=READ_ONLY)
 async def get_leaderboard(sector: Sector = "web3", region: Region = "global", limit: Limit = 10,
                           kind: Literal["influence", "weekly_growth"] = "influence") -> dict:
-    """X AI/Web3 Top200 or Weekly rank-gain KOLs. weekly_growth means positions gained, not followers. Up to limit credits. en is the international pool."""
+    """X AI/Web3 Top100 or Weekly rank-gain KOLs. weekly_growth means positions gained, not followers. Up to limit credits. en is the international pool."""
     return await call("x_leaderboard", sector=sector, region=region, limit=limit, kind=kind)
 
 
@@ -89,7 +90,7 @@ async def get_smart_followers(handle: str, sector: Sector = "web3") -> dict:
 
 
 @server.tool(annotations=READ_ONLY)
-async def get_kol_social(handle: str, limit: Limit = 10) -> dict:
+async def get_kol_social(handle: str, limit: SocialLimit = 10) -> dict:
     """Monitored following/followed/unfollowing/unfollowed events. Limit is per type; up to4*limit credits. Unfollows cover roughly one hour; inspect coverage."""
     return await call("x_social", handle=handle, limit=limit)
 
@@ -121,7 +122,7 @@ async def get_weekly_kols(sector: Sector = "web3", region: Region = "cn", limit:
 
 @server.tool(annotations=READ_ONLY)
 async def get_binance_square_leaderboard(limit: Limit = 10) -> dict:
-    """Square influence Top200: Top200 sources, following floor20, 10% quotes and support breadth discount. Up to limit credits."""
+    """Square influence Top100: Top200 sources, following floor20, 10% quotes and support breadth discount. Up to limit credits."""
     return await call("square_leaderboard", limit=limit)
 
 
@@ -146,7 +147,7 @@ async def get_binance_square_weekly_trending(limit: Limit = 10,
 
 @server.tool(annotations=READ_ONLY)
 async def get_youtube_leaderboard(sector: Sector = "web3", limit: Limit = 10) -> dict:
-    """Weekly AI/Web3 YouTube Top200. Web3 maps to Crypto. Return subscriber counts, original scores and data week. Up to limit credits."""
+    """Weekly AI/Web3 YouTube Top100. Web3 maps to Crypto. Return subscriber counts, original scores and data week. Up to limit credits."""
     return await call("youtube_leaderboard", sector=sector, limit=limit)
 
 

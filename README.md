@@ -47,12 +47,12 @@ Never include my API key in a response or a file committed to Git.
 
 | Ask your agent | Data it can use |
 | --- | --- |
-| “Which AI voices should I follow on X?” | AI/Web3 influence Top200 across global, international and Chinese pools |
+| “Which AI voices should I follow on X?” | AI/Web3 influence Top100 across global, international and Chinese pools |
 | “Who rose the most on X this week?” | Weekly rank-gain KOLs: positions gained, with source coverage |
 | “Who is getting new attention from other KOLs?” | Web3 weekly attention in Chinese/international pools |
-| “Which Binance Square creators should we research?” | Influence Top200 with support breadth discount, profiles and abilities |
+| “Which Binance Square creators should we research?” | Influence Top100 with support breadth discount, profiles and abilities |
 | “Which Square creators gained the most followers?” | Seven-day absolute net growth within the current influence Top1000, when history is available |
-| “Who makes influential AI or crypto videos?” | Separate weekly YouTube AI/Web3 Top200, subscriber counts and scores |
+| “Who makes influential AI or crypto videos?” | Separate weekly YouTube AI/Web3 Top100, subscriber counts and scores |
 | “What does this KOL know well?” | Published X/Square domain scores of 85 or above |
 
 **Example workflow:** discover 10 creators → inspect 3 profiles → inspect those 3 ability models → write a sourced shortlist. At most **16 credits**, if all requests return those records. [Copyable research recipes →](docs/recipes.md)
@@ -147,6 +147,6 @@ If this helps your agent discover better creators, **star the repository** so ot
 
 Circle uses recorded direct reply/quote/repost targets with at least one interaction each way, over7 days by default (1–30). Costs actual returned accounts, up to10; inspect partial coverage and evaluation window. It requires the candidate backend and explicit source configuration; production availability is not implied by client support.
 
-Pro Top500: `uv run influence-client pro --platform x --sector ai --region cn --limit 10` or `get_pro_leaderboard`. Requires a server-verified active Pro entitlement; local default10, maximum500, actual accounts billed. Public endpoints stay capped at200. Check insufficient_coverage and dates. The verified W44 YouTube pool supports AI500 and429 Web3. Explicit wallet-to-Influence linking and shared Pro entitlements are implemented and isolated-tested; production configuration and rollout remain pending.
+Pro Top500: `uv run influence-client pro --platform x --sector ai --region cn --limit 10` or `get_pro_leaderboard`. Requires a server-verified active Pro entitlement; local default10, maximum500, actual accounts billed. Public endpoints stay capped at100. Check insufficient_coverage and dates. The verified W44 YouTube pool supports AI500 and429 Web3. Explicit wallet-to-Influence linking and shared Pro entitlements are implemented and isolated-tested; production configuration and rollout remain pending.
 
 Wheel installation is checked independently from editable imports: CLI entrypoint, Python SDK and an actual stdio MCP initialize/list/call exchange. CI runs the offline variant without data requests; isolated live verification additionally checks all three platforms, Pro denial and the actual credit ledger. See [verification instructions](docs/verification.md#wheel-installation).
