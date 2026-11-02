@@ -25,11 +25,11 @@ Main influence limits: Free100/Pro500. Per-group detail/hot limits: Free10/Pro40
 | `get_binance_square_weekly_trending` | `/api/v1/binance-square/weekly/trending` | metric, limit, region | 0 |
 | `get_youtube_leaderboard` | `/api/v1/youtube/leaderboard` | sector, limit | 0 |
 
-| `get_hot_kols` | `/api/v1/trending/hot-kols` | sector, cn/en region, optional limit | 0 |
+| `get_hot_kols` | `/api/v1/trending/hot-kols` | sector, cn/en region, days=1 or 7, optional limit | 0 |
 | `get_hot_tweets` | `/api/v1/trending/hot-tweets` | sector, cn/en region, optional limit | 0 |
 | `get_rising_tweets` | `/api/v1/trending/rising-tweets` | web3 sector, cn/en region, optional limit | 0 |
 
-Popular KOLs preserve the existing1-day engagement rank; popular tweets preserve the24-hour source score. Rising tweets preserve the existing age-calibrated observed view-velocity rank, Web3 only. Source shortages remain visible; the current rising pool may supply20, not40. Published ability models currently do not attach tweets; attached tweet groups, if supplied, follow10/40. History is newest first.
+Popular KOLs preserve existing engagement ranks: days=1 daily (Free10/Pro40), days=7 weekly (Free5/Pro40); popular tweets preserve the24-hour source score. Rising tweets preserve the existing age-calibrated observed view-velocity rank, Web3 only. Source shortages remain visible; the current rising pool may supply20, not40. Published ability models currently do not attach tweets; attached tweet groups, if supplied, follow10/40. History is newest first.
 
 The existing Square alias `/api/v1/leaderboards/binance-square` shares billing/rate counters with the canonical route. Sector is `ai` or `web3`; X region is `global`, `en` or `cn`. X handles accept an optional leading `@` in the client. Square UIDs come from leaderboard rows; they are not usernames or X handles.
 
