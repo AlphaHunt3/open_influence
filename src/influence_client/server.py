@@ -91,7 +91,7 @@ async def get_smart_followers(handle: str, sector: Sector = "web3", limit: Limit
 
 @server.tool(annotations=READ_ONLY)
 async def get_kol_social(handle: str, limit: SocialLimit | None = None) -> dict:
-    """Monitored following/followed/unfollowing/unfollowed events. Limit is per type; up to4*limit credits. Unfollows cover roughly one hour; inspect coverage."""
+    """Monitored following/followed/unfollowing/unfollowed events. Limit is per type; up to4*limit credits. Free unfollowing/unfollowed records exclude the most recent72 hours; Pro has no plan time cutoff. Confirmed monitored records only."""
     return await call("x_social", handle=handle, limit=limit)
 
 
@@ -103,7 +103,7 @@ async def get_kol_circle(handle: str, days: Annotated[int, Field(ge=1, le=30, st
 
 @server.tool(annotations=READ_ONLY)
 async def get_profile_history(handle: str, limit: Limit | None = None) -> dict:
-    """Recorded X profile snapshots and changed fields newest first (Free5/Pro40). One credit per handle; not complete lifetime history."""
+    """Recorded X profile snapshots and changed fields newest first (Free10/Pro40). One credit per handle; not complete lifetime history."""
     return await call("x_profile_history", handle=handle, limit=limit)
 
 
@@ -153,7 +153,7 @@ async def get_youtube_leaderboard(sector: Sector = "web3", limit: Limit = 10) ->
 
 @server.tool(annotations=READ_ONLY)
 async def get_hot_kols(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None, days: Literal[1, 7] = 1) -> dict:
-    """KOL engagement ranking: days=1 daily (Free10/Pro40), days=7 weekly (Free5/Pro40). Per regional pool, zero credits."""
+    """KOL engagement ranking: days=1 daily (Free10/Pro40), days=7 weekly (Free10/Pro40). Per regional pool, zero credits."""
     return await call("hot", kind="hot-kols", sector=sector, region=region, limit=limit, days=days)
 
 

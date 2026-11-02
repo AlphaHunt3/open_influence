@@ -2,7 +2,7 @@
 
 Contract updated 2026-11-02. Check capabilities for current data coverage and provider availability. Local stdio exposes20 tools:19 hosted data/discovery tools plus `get_usage` (REST wrapper).
 
-Main influence limits: Free100/Pro500. Per-group detail/hot limits: Free10/Pro40. All weekly lists and profile history: Free5/Pro40. Optional detail/weekly/hot limits omitted use the server-verified plan maximum; larger requests are clamped, smaller requests respected. Main local rankings default10 for response size; hosted main rankings default100, Pro500. Social client maximum100, effective plan cap10/40 per event type.
+Main influence limits: Free100/Pro500. Per-group detail/hot limits: Free10/Pro40. All weekly lists and profile history: Free10/Pro40. Optional detail/weekly/hot limits omitted use the server-verified plan maximum; larger requests are clamped, smaller requests respected. Main local rankings default10 for response size; hosted main rankings default100, Pro500. Social client maximum100, effective plan cap10/40 per event type.
 
 | Local / hosted MCP tool | REST GET | Parameters | Credits |
 | --- | --- | --- | ---: |
@@ -29,7 +29,7 @@ Main influence limits: Free100/Pro500. Per-group detail/hot limits: Free10/Pro40
 | `get_hot_tweets` | `/api/v1/trending/hot-tweets` | sector, cn/en region, optional limit | 0 |
 | `get_rising_tweets` | `/api/v1/trending/rising-tweets` | web3 sector, cn/en region, optional limit | 0 |
 
-Popular KOLs preserve existing engagement ranks: days=1 daily (Free10/Pro40), days=7 weekly (Free5/Pro40); popular tweets preserve the24-hour source score. Rising tweets preserve the existing age-calibrated observed view-velocity rank, Web3 only. Source shortages remain visible; the current rising pool may supply20, not40. Published ability models currently do not attach tweets; attached tweet groups, if supplied, follow10/40. History is newest first.
+Popular KOLs preserve existing engagement ranks: days=1 daily (Free10/Pro40), days=7 weekly (Free10/Pro40); popular tweets preserve the24-hour source score. Rising tweets preserve the existing age-calibrated observed view-velocity rank, Web3 only. Source shortages remain visible; the current rising pool may supply20, not40. Published ability models currently do not attach tweets; attached tweet groups, if supplied, follow10/40. History is newest first.
 
 The existing Square alias `/api/v1/leaderboards/binance-square` shares billing/rate counters with the canonical route. Sector is `ai` or `web3`; X region is `global`, `en` or `cn`. X handles accept an optional leading `@` in the client. Square UIDs come from leaderboard rows; they are not usernames or X handles.
 
@@ -83,3 +83,5 @@ There are no YouTube profile/ability or real-time streaming endpoints in this co
 Circle requires the candidate backend with an explicitly configured read-only post source. It measures observed bilateral replies/quotes/reposts: at least one action each way, sorted by total unique posts, minimum directional count, then ID. Missing target posts give `partial`; this is monitored coverage and unknown ingestion freshness, never complete X activity. Query caps fail instead of silently truncating results. Production availability is deployment-dependent; inspect capabilities.
 
 Pro uses a server-verified active entitlement. Local default10, hosted default500; ordinary endpoints stay capped at100. Free, canceled or expired accounts receive pro_required; internal credentials alone do not grant Pro. YouTube uses verified eligible pool_rank values, never re-sorts or relaxes eligibility. Inspect insufficient_coverage, available_count and source dates; the archived W44 source supports AI500 but only429 Web3 ranks. Production availability and wallet-account linking are separate deployment/work items.
+
+Free unfollowing and unfollowed events must be older than 72 hours. Pro has no plan time cutoff, subject to available confirmed records. Following and followed events have no additional plan time restriction.
