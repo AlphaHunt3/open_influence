@@ -109,7 +109,7 @@ async def get_profile_history(handle: str, limit: Limit | None = None) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 async def get_ability_model(handle: str, sector: Sector = "web3", limit: Limit | None = None) -> dict:
-    """Published X domain abilities, only scores >=85. One credit; unavailable models may return 404."""
+    """Published X abilities >=85 with recovered analysis evidence and explicit missing/source status. One credit per model; Free10/Pro40 tweets per language/domain. Unavailable models may return 404."""
     return await call("x_abilities", handle=handle, sector=sector, limit=limit)
 
 
