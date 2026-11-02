@@ -1,6 +1,6 @@
 # Accounts, credits and billing
 
-As checked on 2026-10-29, personal accounts/usage are deployed and X login is configured. New Pro purchases have moved to Infini; the payment gateway and public Influence service are deployed, with real payment acceptance still pending. Gmail still needs provider configuration. Pro Top500 server code is deployed; entitlement and dataset coverage must still be verified for an actual paid account.
+As checked on 2026-10-29, personal accounts/usage are deployed and X login is configured. New Pro purchases have moved to Infini; the payment gateway and public Influence service are deployed, with real payment acceptance still pending. Google still needs provider configuration. Pro Top500 server code is deployed; entitlement and dataset coverage must still be verified for an actual paid account.
 
 Sign in at https://mcp.xhunt.ai/account with X or a verified `@gmail.com` Google account. Create a personal API key, copy it once, and configure your agent locally. Revoking the key disables further API use. Keys are stored as hashes by the service. Browser login uses a separate HttpOnly cookie; the client does not copy it.
 
@@ -10,7 +10,7 @@ Sign in at https://mcp.xhunt.ai/account with X or a verified `@gmail.com` Google
 | XHunt 10,001–50,000 | 6,000 | 1,500 |
 | XHunt 50,001–100,000 | 4,000 | 1,000 |
 | XHunt 100,001–200,000 | 2,000 | 500 |
-| Other/missing X rank or Gmail | 1,000 | 250 |
+| Other/missing X rank or Google | 1,000 | 250 |
 | Pro — USD39/month | 30,000 | 7,500 |
 | Approved organization | Free login allowance + approved extra 1–10,000 | floor(monthly / 4) |
 

@@ -29,7 +29,7 @@ What to copy in principle: shortest working install, outcome-first prompts, a sm
 
 ## Release gates, in order
 
-1. Deploy/configure the auth-billing version and verify real X/Gmail sign-in, personal key creation and a5-result first call. The current account worktree is not deployment proof. Missing key signup is a launch blocker even when data endpoints work. Payment is optional for the first public preview; hide disabled purchase claims in announcements.
+1. Deploy/configure the auth-billing version and verify real X/Google sign-in, personal key creation and a5-result first call. The current account worktree is not deployment proof. Missing key signup is a launch blocker even when data endpoints work. Payment is optional for the first public preview; hide disabled purchase claims in announcements.
 2. Publish this repository under the intended organization, set homepage/description/topics, enable issues/discussions if maintainers will answer, configure a private security reporting route. Ensure all relative docs/assets render publicly.
 3. Publish a versioned GitHub release after package verification. Publish PyPI only after deciding package ownership and trusted publishing; do not claim `pip install influence-client` or `uvx influence-client` works before it exists. The current remote-MCP install avoids this dependency.
 4. Record a real45–60second demo: connect → request10AI creators onX andYouTube → show source time, separate scoring and actual credits. Publish a short captioned GIF/MP4 or repository asset. Current SVG is a hero, not a recorded product demo.

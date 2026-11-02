@@ -20,7 +20,7 @@ Client configuration examples target standard Streamable HTTP or stdio. Claude D
 
 ## Contract sync — 2026-10-29
 
-Added the four deployed X per-handle APIs to SDK, CLI and local MCP. The earlier 11-tool verification above is historical; current discovery exposes 15 tools. Coverage/billing documentation now reflects the deployed account service, with Gmail and payments still disabled.
+Added the four deployed X per-handle APIs to SDK, CLI and local MCP. The earlier 11-tool verification above is historical; current discovery exposes 15 tools. Coverage/billing documentation now reflects the deployed account service, with Google and payments still disabled.
 
 Validation: `PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -v` (3 passing checks, HTTP mocked): malformed inputs fail before a billable request; unknown fields/coverage and actual charge survive SDK handling; MCP discovers the new tools and bounds social limits per type. CLI help and Python compilation also checked. No real payment or new client-app certification is claimed.
 

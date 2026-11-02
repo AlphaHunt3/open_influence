@@ -12,7 +12,7 @@
 
 ## 一分钟接入
 
-到 [账号页](https://mcp.xhunt.ai/account) 用 X 或已验证的 Gmail 登录，创建个人 API key。登录和付款入口需要服务端已部署登录计费版本并配置对应提供商。
+到 [账号页](https://mcp.xhunt.ai/account) 用 X 或已验证的 Google 登录，创建个人 API key。登录和付款入口需要服务端已部署登录计费版本并配置对应提供商。
 
 Claude Code 直接接入：
 
@@ -50,7 +50,7 @@ Cursor、VS Code、Claude Desktop、Windsurf 及本地 stdio 配置见[接入指
 
 X另提供每个handle的六组排名与项目排名、global/cn各Top10 Smart Followers、当前资料与已记录的资料历史、四向关注/取关事件。六组人数支持已完成排名批次的真实去重账号数（含项目），需部署配置快照发布器；缺失或过期时仍为空。国际池不等于严格英语，分类未知时保留空值。Social是有限监测记录，取关约覆盖最近一小时，limit是每种事件的上限，费用最多4×limit；Smart Followers按两组实际返回人数收费，最多20。资料历史每个handle收1credit，不声称覆盖终身。
 
-Following KOLs完整名单、原始timeline/推文搜索、跨平台身份匹配仍未提供。灵魂指数、灵魂榜和能力榜暂不公开。2026-10-29线上已部署个人账户和额度，X登录已配置，Gmail与Pro支付仍未启用，Pro Top500服务端和客户端已实现待部署，kol钱包身份与Influence权益仍待绑定。
+Following KOLs完整名单、原始timeline/推文搜索、跨平台身份匹配仍未提供。灵魂指数、灵魂榜和能力榜暂不公开。2026-10-29线上已部署个人账户和额度，X登录已配置，Google与Pro支付仍未启用，Pro Top500服务端和客户端已实现待部署，kol钱包身份与Influence权益仍待绑定。
 
 ## 本地客户端
 
@@ -88,7 +88,7 @@ asyncio.run(main())
 ## 费用与口径
 
 - 排行榜及热门/趋势榜为0credit（Pro Top500仍需有效订阅）；其他账号数据按成功返回账号/事件计费，每条1credit；资料或能力模型每次1credit；空结果、错误、capabilities及usage免费。
-- 免费月额度1,000–8,000，取决于XHunt排名；Gmail为1,000。Pro39美元/月，30,000credit；机构可申请额外免费额度。
+- 免费月额度1,000–8,000，取决于XHunt排名；Google为1,000。Pro39美元/月，30,000credit；机构可申请额外免费额度。
 - 日上限为月额度的四分之一，按UTC自然日/月重置；同一账号多个key、REST/MCP共用额度和每endpoint每分钟100次的限流。
 - 本地响应`_client.credits_charged`来自服务端实际扣费头；缺少计费头时为null，不会说成免费。客户端不自动重试、不隐藏多次调用、不购买额度。
 - 网络超时可能已经消耗credit。`quota_exceeded`要等额度恢复或调整计划，`rate_limited`才是短时间限流。

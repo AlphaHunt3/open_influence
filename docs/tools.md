@@ -1,6 +1,6 @@
 # Tool and API reference
 
-Contract reviewed against the main implementation and public service on 2026-10-29. Check capabilities on the service you use for current availability. X login is configured; Gmail and Pro payments are not enabled on the public service at this check.
+Contract reviewed against the main implementation and public service on 2026-10-29. Check capabilities on the service you use for current availability. X login is configured; Google and Pro payments are not enabled on the public service at this check.
 
 Local stdio exposes 17 tools: the 16 hosted data/discovery tools plus **`get_usage`**, a client-side wrapper over REST. Public leaderboard limits are integers 1–100; Pro limits are 1–500; local lists and social events default to 10, hosted lists to 100 and hosted social events to 20 per type. Smart Followers always returns at most 10 per pool.
 

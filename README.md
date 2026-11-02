@@ -18,7 +18,7 @@ This repository provides a **stdio MCP server, async Python client, CLI and agen
 
 ## Connect in a minute
 
-Get a personal API key at [mcp.xhunt.ai/account](https://mcp.xhunt.ai/account). Sign in with X or a verified Gmail account. Provider availability depends on service configuration.
+Get a personal API key at [mcp.xhunt.ai/account](https://mcp.xhunt.ai/account). Sign in with X or a verified Google account. Provider availability depends on service configuration.
 
 **Claude Code — hosted MCP, no local install:**
 
@@ -128,14 +128,14 @@ asyncio.run(main())
 
 The auth-billing service implements **1 credit per returned account/channel**. Profiles, rank aggregates, profile history and ability models cost 1 per handle; Smart Followers costs actual returned accounts across both pools, social costs actual events across four types; all leaderboards and trending/weekly ranking lists cost0, including Pro Top500 (active Pro is still required). Errors, empty results, capabilities and usage queries cost 0. Repeated account-data reads still cost credits; rankings remain free, including with an exhausted balance.
 
-- Free monthly allowance: **1,000–8,000**, depending on XHunt rank; Gmail starts at **1,000**.
+- Free monthly allowance: **1,000–8,000**, depending on XHunt rank; Google starts at **1,000**.
 - Pro: **$39/month for 30,000 credits**. Approved organizations can receive extra free-plan credits.
 - Daily cap: one quarter of the monthly allowance. Resets use UTC calendar boundaries.
 - Rate limit: **100 requests per rolling minute per endpoint per account**, shared across keys and equivalent REST/MCP calls.
 
 No automatic retries, paid fan-out, purchases or account changes. A timed-out data request may already have consumed credits. On `quota_exceeded`, check usage; on `rate_limited`, pause. [Account and billing details →](docs/billing.md)
 
-As checked on 2026-10-29, personal accounts and usage are deployed and X login is configured; Gmail login still needs provider configuration. New purchases use Infini; the gateway and public Influence service are deployed, while actual paid lifecycle acceptance remains pending. Pro Top500 code is deployed; real paid-account access and dataset coverage still require acceptance. A missing billing header is reported as `null`, never as zero.
+As checked on 2026-10-29, personal accounts and usage are deployed and X login is configured; Google login still needs provider configuration. New purchases use Infini; the gateway and public Influence service are deployed, while actual paid lifecycle acceptance remains pending. Pro Top500 code is deployed; real paid-account access and dataset coverage still require acceptance. A missing billing header is reported as `null`, never as zero.
 
 ## Why this repository is small
 
