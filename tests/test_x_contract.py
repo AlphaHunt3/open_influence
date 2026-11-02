@@ -70,6 +70,25 @@ class XContractTest(unittest.IsolatedAsyncioTestCase):
         await self.client.x_social("alice", limit=100)
         self.assertEqual(self.requests[-1].url.params["limit"], "100")
 
+    async def test_plan_defaults_are_not_replaced_and_hot_validation_is_local(self):
+        for call in (self.client.x_smart_followers, self.client.x_social, self.client.x_circle,
+                     self.client.x_profile_history, self.client.x_abilities):
+            await call("alice")
+            self.assertNotIn("limit", self.requests[-1].url.params)
+        await self.client.x_weekly()
+        self.assertNotIn("limit", self.requests[-1].url.params)
+        await self.client.hot("hot-tweets", sector="ai", region="cn", limit=40)
+        self.assertEqual(self.requests[-1].url.path, "/api/v1/trending/hot-tweets")
+        self.assertEqual(self.requests[-1].url.params["limit"], "40")
+        previous = len(self.requests)
+        for kwargs in ({"kind": "unknown"}, {"kind": "rising-tweets", "sector": "ai"}, {"region": "global"}, {"limit": False}):
+            with self.assertRaises(InfluenceError):
+                await self.client.hot(**kwargs)
+        self.assertEqual(len(self.requests), previous)
+        tools = {tool.name: tool for tool in await server.list_tools()}
+        for name in ("get_hot_kols", "get_hot_tweets", "get_rising_tweets"):
+            self.assertIn(name, tools)
+
     async def test_pro_limits_coverage_and_discovery(self):
         for kwargs in ({"limit": 501}, {"limit": True}, {"limit": 0}, {"platform": "youtube", "region": "cn"}, {"platform": "invalid"}):
             with self.assertRaises(InfluenceError):
