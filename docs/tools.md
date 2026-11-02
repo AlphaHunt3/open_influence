@@ -1,29 +1,35 @@
 # Tool and API reference
 
-Contract reviewed against the main implementation and public service on 2026-10-29. Check capabilities on the service you use for current availability. X login is configured; Google and Pro payments are not enabled on the public service at this check.
+Contract updated 2026-11-02. Check capabilities for current data coverage and provider availability. Local stdio exposes20 tools:19 hosted data/discovery tools plus `get_usage` (REST wrapper).
 
-Local stdio exposes 17 tools: the 16 hosted data/discovery tools plus **`get_usage`**, a client-side wrapper over REST. Public leaderboard limits are integers 1–100; Pro limits are 1–500; local lists and social events default to 10, hosted lists to 100 and hosted social events to 20 per type. Smart Followers always returns at most 10 per pool.
+Main influence limits: Free100/Pro500. Per-group detail/hot limits: Free10/Pro40. All weekly lists and profile history: Free5/Pro40. Optional detail/weekly/hot limits omitted use the server-verified plan maximum; larger requests are clamped, smaller requests respected. Main local rankings default10 for response size; hosted main rankings default100, Pro500. Social client maximum100, effective plan cap10/40 per event type.
 
 | Local / hosted MCP tool | REST GET | Parameters | Credits |
 | --- | --- | --- | ---: |
 | `get_capabilities` | `/capabilities.json` (public), `/api/v1/capabilities` (key) | none | 0 |
 | `get_usage` **local only** | `/api/v1/usage` | none | 0 |
-| `get_leaderboard` | `/api/v1/leaderboards/influence` | sector, region, limit; kind=influence | returned rows |
-| `get_leaderboard` | `/api/v1/leaderboards/weekly-growth` | sector, region, limit; kind=weekly_growth | returned rows |
-| `get_pro_leaderboard` | `/api/v1/pro/leaderboards/{platform}` | platform=x/binance-square/youtube, sector, region (X only), limit | active Pro required; actual accounts, up to500 |
+| `get_leaderboard` | `/api/v1/leaderboards/influence` | sector, region, limit; kind=influence | 0 |
+| `get_leaderboard` | `/api/v1/leaderboards/weekly-growth` | sector, region, limit; kind=weekly_growth | 0 |
+| `get_pro_leaderboard` | `/api/v1/pro/leaderboards/{platform}` | platform=x/binance-square/youtube, sector, region (X only), limit | 0; active Pro required |
 | `get_kol_profile` | `/api/v1/kols/{handle}` | X handle | 1 |
 | `get_kol_ranks` | `/api/v1/kols/{handle}/ranks` | handle | 1 |
-| `get_smart_followers` | `/api/v1/kols/{handle}/smart-followers` | handle, sector | actual accounts across both pools, up to 20 |
+| `get_smart_followers` | `/api/v1/kols/{handle}/smart-followers` | handle, sector, limit | actual accounts across both pools, Free up to20 / Pro up to80 |
 | `get_kol_social` | `/api/v1/kols/{handle}/social` | handle, limit **per type** | actual events across four types, up to 4 × limit |
-| `get_kol_circle` | `/api/v1/kols/{handle}/circle` | handle, days=7 (1–30) | actual partners, up to10 |
-| `get_profile_history` | `/api/v1/kols/{handle}/profile-history` | handle | 1 per handle |
-| `get_ability_model` | `/api/v1/kols/{handle}/abilities` | handle, sector | 1 |
-| `get_weekly_kols` | `/api/v1/weekly/kols` | sector, region, mode, limit | returned rows |
-| `get_binance_square_leaderboard` | `/api/v1/binance-square/leaderboard` | limit | returned rows |
+| `get_kol_circle` | `/api/v1/kols/{handle}/circle` | handle, days=7 (1–30), limit | actual partners, Free10/Pro40 |
+| `get_profile_history` | `/api/v1/kols/{handle}/profile-history` | handle, limit | 1 per handle |
+| `get_ability_model` | `/api/v1/kols/{handle}/abilities` | handle, sector, limit | 1 |
+| `get_weekly_kols` | `/api/v1/weekly/kols` | sector, region, mode, limit | 0 |
+| `get_binance_square_leaderboard` | `/api/v1/binance-square/leaderboard` | limit | 0 |
 | `get_binance_square_profile` | `/api/v1/binance-square/kols/{square_uid}` | immutable UID | 1 |
 | `get_binance_square_abilities` | `/api/v1/binance-square/kols/{square_uid}/abilities` | immutable UID | 1 |
-| `get_binance_square_weekly_trending` | `/api/v1/binance-square/weekly/trending` | metric, limit, region | returned rows |
-| `get_youtube_leaderboard` | `/api/v1/youtube/leaderboard` | sector, limit | returned rows |
+| `get_binance_square_weekly_trending` | `/api/v1/binance-square/weekly/trending` | metric, limit, region | 0 |
+| `get_youtube_leaderboard` | `/api/v1/youtube/leaderboard` | sector, limit | 0 |
+
+| `get_hot_kols` | `/api/v1/trending/hot-kols` | sector, cn/en region, optional limit | 0 |
+| `get_hot_tweets` | `/api/v1/trending/hot-tweets` | sector, cn/en region, optional limit | 0 |
+| `get_rising_tweets` | `/api/v1/trending/rising-tweets` | web3 sector, cn/en region, optional limit | 0 |
+
+Popular KOLs preserve the existing1-day engagement rank; popular tweets preserve the24-hour source score. Rising tweets preserve the existing age-calibrated observed view-velocity rank, Web3 only. Source shortages remain visible; the current rising pool may supply20, not40. Published ability models currently do not attach tweets; attached tweet groups, if supplied, follow10/40. History is newest first.
 
 The existing Square alias `/api/v1/leaderboards/binance-square` shares billing/rate counters with the canonical route. Sector is `ai` or `web3`; X region is `global`, `en` or `cn`. X handles accept an optional leading `@` in the client. Square UIDs come from leaderboard rows; they are not usernames or X handles.
 
