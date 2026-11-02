@@ -56,18 +56,19 @@ class XContractTest(unittest.IsolatedAsyncioTestCase):
         window = tools["get_kol_circle"].inputSchema["properties"]["days"]
         self.assertEqual((window["minimum"], window["maximum"], window["default"]), (1, 30, 7))
         limit = tools["get_kol_social"].inputSchema["properties"]["limit"]
-        self.assertEqual((limit["minimum"], limit["maximum"], limit["default"]), (1, 200, 10))
+        self.assertEqual((limit["anyOf"][0]["minimum"], limit["anyOf"][0]["maximum"], limit["default"]), (1, 100, None))
 
     async def test_public_rankings_max100_and_social_keeps_its_separate_contract(self):
         tools = {tool.name: tool for tool in await server.list_tools()}
         for name in ("get_leaderboard", "get_weekly_kols", "get_binance_square_leaderboard", "get_binance_square_weekly_trending", "get_youtube_leaderboard"):
-            self.assertEqual(tools[name].inputSchema["properties"]["limit"]["maximum"], 100)
+            schema = tools[name].inputSchema["properties"]["limit"]
+            self.assertEqual(schema.get("maximum", schema.get("anyOf", [{}])[0].get("maximum")), 100)
         for call in (self.client.x_leaderboard, self.client.x_weekly, self.client.square_leaderboard, self.client.square_weekly, self.client.youtube_leaderboard):
             with self.assertRaises(InfluenceError):
                 await call(limit=101)
         self.assertEqual(self.requests, [])
-        await self.client.x_social("alice", limit=200)
-        self.assertEqual(self.requests[-1].url.params["limit"], "200")
+        await self.client.x_social("alice", limit=100)
+        self.assertEqual(self.requests[-1].url.params["limit"], "100")
 
     async def test_pro_limits_coverage_and_discovery(self):
         for kwargs in ({"limit": 501}, {"limit": True}, {"limit": 0}, {"platform": "youtube", "region": "cn"}, {"platform": "invalid"}):

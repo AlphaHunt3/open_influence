@@ -70,7 +70,7 @@ Actual website view from2026-10-28, using the2026-W44 publication. This is a pro
 
 | Platform | Available data | Cadence / coverage |
 | --- | --- | --- |
-| **X** | Influence and per-handle six-pool ranks, profiles/history, Smart Followers Top10, monitored social events, bilateral Circle Top10, abilities, weekly trends | Daily influence source; AI/Web3 × global/en/cn. Attention is Web3 cn/en only |
+| **X** | Influence and per-handle six-pool ranks, profiles/history, Smart Followers Free10/Pro40, monitored social events, bilateral Circle Free10/Pro40, abilities, weekly trends | Daily influence source; AI/Web3 × global/en/cn. Attention is Web3 cn/en only |
 | **Binance Square** | Influence ranks, profiles, abilities, weekly follower or smart-follower gains | Daily collection; weekly growth requires a comparable seven-day observation baseline |
 | **YouTube** | AI and Web3 channel ranks, subscriber counts, scores and basic metrics | Weekly published reports; Web3 maps to the collector’s Crypto category |
 
@@ -145,8 +145,12 @@ The client sends read-only requests to `https://mcp.xhunt.ai` by default. It doe
 
 If this helps your agent discover better creators, **star the repository** so others can find it. Useful contributions include research recipes, client configurations and translations.
 
-Circle uses recorded direct reply/quote/repost targets with at least one interaction each way, over7 days by default (1–30). Costs actual returned accounts, up to10; inspect partial coverage and evaluation window. It requires the candidate backend and explicit source configuration; production availability is not implied by client support.
+Circle uses recorded direct reply/quote/repost targets with at least one interaction each way, over7 days by default (1–30). Costs actual returned accounts, up to40 on Pro (10 on Free); inspect partial coverage and evaluation window. It requires the candidate backend and explicit source configuration; production availability is not implied by client support.
 
 Pro Top500: `uv run influence-client pro --platform x --sector ai --region cn --limit 10` or `get_pro_leaderboard`. Requires a server-verified active Pro entitlement; local default10, maximum500, zero credits charged. Public endpoints stay capped at100. Check insufficient_coverage and dates. The verified W44 YouTube pool supports AI500 and429 Web3. Explicit wallet-to-Influence linking and shared Pro entitlements are implemented and isolated-tested; production configuration and rollout remain pending.
 
 Wheel installation is checked independently from editable imports: CLI entrypoint, Python SDK and an actual stdio MCP initialize/list/call exchange. CI runs the offline variant without data requests; isolated live verification additionally checks all three platforms, Pro denial and the actual credit ledger. See [verification instructions](docs/verification.md#wheel-installation).
+
+Per-group limits: Free10/Pro40 for smart followers, social, circle, ability attached tweets and hot lists; Free5/Pro40 for all weekly lists and profile history. Main influence lists stay Free100/Pro500. Limits use server-verified entitlement; omit optional limits for the plan maximum, or request fewer. No ranking or hot/weekly list spends credits. The website shows hot/weekly lists; account detail lists and ability tweets remain API/MCP only.
+
+Popular KOLs (1-day source engagement) and popular tweets (24-hour source score) cover AI/Web3 cn/en pools. Rising tweets preserve the existing age-calibrated view-velocity rank and cover Web3 only. Use `get_hot_kols`, `get_hot_tweets`, `get_rising_tweets`, or Python `client.hot(kind=...)`. Current ability-model sources do not attach tweets; do not infer nonexistent evidence.

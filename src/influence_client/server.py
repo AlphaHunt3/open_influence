@@ -13,7 +13,7 @@ from .client import InfluenceClient, InfluenceError
 Sector = Literal["ai", "web3"]
 Region = Literal["global", "en", "cn"]
 Limit = Annotated[int, Field(ge=1, le=100)]
-SocialLimit = Annotated[int, Field(ge=1, le=200)]
+SocialLimit = Annotated[int, Field(ge=1, le=100)]
 
 
 @asynccontextmanager
@@ -84,37 +84,37 @@ async def get_kol_ranks(handle: str) -> dict:
 
 
 @server.tool(annotations=READ_ONLY)
-async def get_smart_followers(handle: str, sector: Sector = "web3") -> dict:
-    """Top10 global and Chinese KOL followers per sector, with known classifications. Actual returned accounts cost credits, up to20; international does not mean verified English."""
-    return await call("x_smart_followers", handle=handle, sector=sector)
+async def get_smart_followers(handle: str, sector: Sector = "web3", limit: Limit | None = None) -> dict:
+    """Free10/Pro40 global and Chinese KOL followers per sector, with known classifications. Actual returned accounts cost credits, up to80; international does not mean verified English."""
+    return await call("x_smart_followers", handle=handle, sector=sector, limit=limit)
 
 
 @server.tool(annotations=READ_ONLY)
-async def get_kol_social(handle: str, limit: SocialLimit = 10) -> dict:
+async def get_kol_social(handle: str, limit: SocialLimit | None = None) -> dict:
     """Monitored following/followed/unfollowing/unfollowed events. Limit is per type; up to4*limit credits. Unfollows cover roughly one hour; inspect coverage."""
     return await call("x_social", handle=handle, limit=limit)
 
 
 @server.tool(annotations=READ_ONLY)
-async def get_kol_circle(handle: str, days: Annotated[int, Field(ge=1, le=30, strict=True)] = 7) -> dict:
-    """Top10 observed bilateral direct reply/quote/repost partners; default7 days. Each direction requires an interaction; costs actual returned accounts, up to10. Recorded partial coverage, not all X activity; inspect status/meta."""
-    return await call("x_circle", handle=handle, days=days)
+async def get_kol_circle(handle: str, days: Annotated[int, Field(ge=1, le=30, strict=True)] = 7, limit: Limit | None = None) -> dict:
+    """Free10/Pro40 observed bilateral direct reply/quote/repost partners; default7 days. Each direction requires an interaction; costs actual returned accounts, up to40. Recorded partial coverage, not all X activity; inspect status/meta."""
+    return await call("x_circle", handle=handle, days=days, limit=limit)
 
 
 @server.tool(annotations=READ_ONLY)
-async def get_profile_history(handle: str) -> dict:
-    """Recorded X profile snapshots and changed fields in source order. One credit per handle; not complete lifetime history."""
-    return await call("x_profile_history", handle=handle)
+async def get_profile_history(handle: str, limit: Limit | None = None) -> dict:
+    """Recorded X profile snapshots and changed fields newest first (Free5/Pro40). One credit per handle; not complete lifetime history."""
+    return await call("x_profile_history", handle=handle, limit=limit)
 
 
 @server.tool(annotations=READ_ONLY)
-async def get_ability_model(handle: str, sector: Sector = "web3") -> dict:
+async def get_ability_model(handle: str, sector: Sector = "web3", limit: Limit | None = None) -> dict:
     """Published X domain abilities, only scores >=85. One credit; unavailable models may return 404."""
-    return await call("x_abilities", handle=handle, sector=sector)
+    return await call("x_abilities", handle=handle, sector=sector, limit=limit)
 
 
 @server.tool(annotations=READ_ONLY)
-async def get_weekly_kols(sector: Sector = "web3", region: Region = "cn", limit: Limit = 10,
+async def get_weekly_kols(sector: Sector = "web3", region: Region = "cn", limit: Limit | None = None,
                           mode: Literal["attention", "new_entries"] = "attention") -> dict:
     """X weekly attention (Web3 cn/en only), or Top200 entries vs a 7-day baseline. Includes re-entries. Respect insufficient_history; zero credits."""
     return await call("x_weekly", sector=sector, region=region, limit=limit, mode=mode)
@@ -139,7 +139,7 @@ async def get_binance_square_abilities(square_uid: str) -> dict:
 
 
 @server.tool(annotations=READ_ONLY)
-async def get_binance_square_weekly_trending(limit: Limit = 10,
+async def get_binance_square_weekly_trending(limit: Limit | None = None,
         metric: Literal["followers", "smart_followers"] = "followers", region: Region = "global") -> dict:
     """Current global Square Top1000 ranked by net 7-day gain, filtered by published language before limiting (en includes en-*; cn includes zh-*). Needs history and a server with region support. Zero credits; authentication and rate limits apply."""
     return await call("square_weekly", limit=limit, metric=metric, region=region)
@@ -149,6 +149,24 @@ async def get_binance_square_weekly_trending(limit: Limit = 10,
 async def get_youtube_leaderboard(sector: Sector = "web3", limit: Limit = 10) -> dict:
     """Weekly AI/Web3 YouTube Top100. Web3 maps to Crypto. Return subscriber counts, original scores and data week. Zero credits; authentication and rate limits apply."""
     return await call("youtube_leaderboard", sector=sector, limit=limit)
+
+
+@server.tool(annotations=READ_ONLY)
+async def get_hot_kols(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None) -> dict:
+    """Existing source hot ranking. Free10/Pro40 per group, zero credits. Inspect definition/coverage; rising tweets Web3 only."""
+    return await call("hot", kind="hot-kols", sector=sector, region=region, limit=limit)
+
+
+@server.tool(annotations=READ_ONLY)
+async def get_hot_tweets(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None) -> dict:
+    """Existing source hot ranking. Free10/Pro40 per group, zero credits. Inspect definition/coverage; rising tweets Web3 only."""
+    return await call("hot", kind="hot-tweets", sector=sector, region=region, limit=limit)
+
+
+@server.tool(annotations=READ_ONLY)
+async def get_rising_tweets(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None) -> dict:
+    """Existing source hot ranking. Free10/Pro40 per group, zero credits. Inspect definition/coverage; rising tweets Web3 only."""
+    return await call("hot", kind="rising-tweets", sector=sector, region=region, limit=limit)
 
 
 def main():

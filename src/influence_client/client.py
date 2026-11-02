@@ -128,31 +128,31 @@ class InfluenceClient:
     async def x_ranks(self, handle):
         return await self._get(f"/api/v1/kols/{identifier(handle)}/ranks")
 
-    async def x_smart_followers(self, handle, sector="web3"):
+    async def x_smart_followers(self, handle, sector="web3", limit=None):
         return await self._get(f"/api/v1/kols/{identifier(handle)}/smart-followers",
-                               {"sector": choice(sector, ("ai", "web3"), "sector")})
+                               {"sector": choice(sector, ("ai", "web3"), "sector"), **({"limit": count(limit)} if limit is not None else {})})
 
-    async def x_circle(self, handle, days=7):
+    async def x_circle(self, handle, days=7, limit=None):
         if isinstance(days, bool) or not isinstance(days, int) or not 1 <= days <= 30:
             raise InfluenceError("invalid_parameter", "days must be an integer from 1 to 30", 422)
-        return await self._get(f"/api/v1/kols/{identifier(handle)}/circle", {"days": days})
+        return await self._get(f"/api/v1/kols/{identifier(handle)}/circle", {"days": days, **({"limit": count(limit)} if limit is not None else {})})
 
-    async def x_social(self, handle, limit=10):
-        return await self._get(f"/api/v1/kols/{identifier(handle)}/social", {"limit": count(limit, 200)})
+    async def x_social(self, handle, limit=None):
+        return await self._get(f"/api/v1/kols/{identifier(handle)}/social", ({"limit": count(limit)} if limit is not None else {}))
 
-    async def x_profile_history(self, handle):
-        return await self._get(f"/api/v1/kols/{identifier(handle)}/profile-history")
+    async def x_profile_history(self, handle, limit=None):
+        return await self._get(f"/api/v1/kols/{identifier(handle)}/profile-history", {"limit": count(limit)} if limit is not None else {})
 
-    async def x_abilities(self, handle, sector="web3"):
-        return await self._get(f"/api/v1/kols/{identifier(handle)}/abilities", {"sector": choice(sector, ("ai", "web3"), "sector")})
+    async def x_abilities(self, handle, sector="web3", limit=None):
+        return await self._get(f"/api/v1/kols/{identifier(handle)}/abilities", {"sector": choice(sector, ("ai", "web3"), "sector"), **({"limit": count(limit)} if limit is not None else {})})
 
-    async def x_weekly(self, sector="web3", region="cn", limit=10, mode="attention"):
+    async def x_weekly(self, sector="web3", region="cn", limit=None, mode="attention"):
         choice(mode, ("attention", "new_entries"), "mode")
         choice(sector, ("ai", "web3"), "sector")
         choice(region, ("global", "en", "cn"), "region")
         if mode == "attention" and (sector != "web3" or region == "global"):
             raise InfluenceError("unsupported_combination", "attention only supports Web3 cn/en; use new_entries or weekly_growth for other pools", 422)
-        return await self._get("/api/v1/weekly/kols", {"sector": sector, "region": region, "mode": mode, "limit": count(limit)})
+        return await self._get("/api/v1/weekly/kols", {"sector": sector, "region": region, "mode": mode, **({"limit": count(limit)} if limit is not None else {})})
 
     async def square_leaderboard(self, limit=10):
         return await self._get("/api/v1/binance-square/leaderboard", {"limit": count(limit)})
@@ -163,14 +163,23 @@ class InfluenceClient:
     async def square_abilities(self, square_uid):
         return await self._get(f"/api/v1/binance-square/kols/{identifier(square_uid, True)}/abilities")
 
-    async def square_weekly(self, limit=10, metric="followers", region="global"):
+    async def square_weekly(self, limit=None, metric="followers", region="global"):
         result = await self._get("/api/v1/binance-square/weekly/trending", {
-            "limit": count(limit), "metric": choice(metric, ("followers", "smart_followers"), "metric"),
+            **({"limit": count(limit)} if limit is not None else {}), "metric": choice(metric, ("followers", "smart_followers"), "metric"),
             "region": choice(region, ("global", "en", "cn"), "region")})
         no_history = result.get("status") in ("insufficient_history", "stale_data") and result.get("items") == []
         if region != "global" and (result.get("meta") or {}).get("region") != region and not no_history:
             raise InfluenceError("unsupported_region", "Server did not confirm Square language filtering. Check capabilities.weekly_regions before requesting a language-specific list.")
         return result
+
+    async def hot(self, kind="hot-kols", sector="web3", region="cn", limit=None):
+        choice(kind, ("hot-kols", "hot-tweets", "rising-tweets"), "kind")
+        choice(sector, ("ai", "web3"), "sector")
+        choice(region, ("cn", "en"), "region")
+        if kind == "rising-tweets" and sector != "web3":
+            raise InfluenceError("unsupported_combination", "Rising tweets cover Web3 only", 422)
+        return await self._get("/api/v1/trending/" + kind, {"sector": sector, "region": region,
+                               **({"limit": count(limit)} if limit is not None else {})})
 
     async def youtube_leaderboard(self, sector="web3", limit=10):
         return await self._get("/api/v1/youtube/leaderboard", {
