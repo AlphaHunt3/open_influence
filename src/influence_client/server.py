@@ -97,7 +97,7 @@ async def get_kol_social(handle: str, limit: SocialLimit | None = None) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 async def get_kol_circle(handle: str, days: Annotated[int, Field(ge=1, le=30, strict=True)] = 7, limit: Limit | None = None) -> dict:
-    """Free10/Pro40 observed bilateral direct reply/quote/repost partners; default7 days. Each direction requires an interaction; costs actual returned accounts, up to40. Recorded partial coverage, not all X activity; inspect status/meta."""
+    """Free10/Pro40 observed bilateral direct reply/quote/repost partners; default7 days. Each direction requires an interaction; costs actual returned accounts, up to40. Recorded partial coverage, not all X activity. Inspect status=stale_data and cache timestamps: snapshots can be up to one hour old; cached accounts retain normal billing."""
     return await call("x_circle", handle=handle, days=days, limit=limit)
 
 
