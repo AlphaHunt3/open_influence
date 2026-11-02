@@ -80,8 +80,10 @@ class XContractTest(unittest.IsolatedAsyncioTestCase):
         await self.client.hot("hot-tweets", sector="ai", region="cn", limit=40)
         self.assertEqual(self.requests[-1].url.path, "/api/v1/trending/hot-tweets")
         self.assertEqual(self.requests[-1].url.params["limit"], "40")
+        await self.client.hot(days=7)
+        self.assertEqual(self.requests[-1].url.params["days"], "7")
         previous = len(self.requests)
-        for kwargs in ({"kind": "unknown"}, {"kind": "rising-tweets", "sector": "ai"}, {"region": "global"}, {"limit": False}):
+        for kwargs in ({"days": 2}, {"days": True}, {"days": 7, "kind": "hot-tweets"}, {"kind": "unknown"}, {"kind": "rising-tweets", "sector": "ai"}, {"region": "global"}, {"limit": False}):
             with self.assertRaises(InfluenceError):
                 await self.client.hot(**kwargs)
         self.assertEqual(len(self.requests), previous)

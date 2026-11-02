@@ -152,9 +152,9 @@ async def get_youtube_leaderboard(sector: Sector = "web3", limit: Limit = 10) ->
 
 
 @server.tool(annotations=READ_ONLY)
-async def get_hot_kols(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None) -> dict:
-    """Existing source hot ranking. Free10/Pro40 per group, zero credits. Inspect definition/coverage; rising tweets Web3 only."""
-    return await call("hot", kind="hot-kols", sector=sector, region=region, limit=limit)
+async def get_hot_kols(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None, days: Literal[1, 7] = 1) -> dict:
+    """KOL engagement ranking: days=1 daily (Free10/Pro40), days=7 weekly (Free5/Pro40). Per regional pool, zero credits."""
+    return await call("hot", kind="hot-kols", sector=sector, region=region, limit=limit, days=days)
 
 
 @server.tool(annotations=READ_ONLY)

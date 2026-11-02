@@ -172,13 +172,16 @@ class InfluenceClient:
             raise InfluenceError("unsupported_region", "Server did not confirm Square language filtering. Check capabilities.weekly_regions before requesting a language-specific list.")
         return result
 
-    async def hot(self, kind="hot-kols", sector="web3", region="cn", limit=None):
+    async def hot(self, kind="hot-kols", sector="web3", region="cn", limit=None, days=1):
+        if isinstance(days, bool) or not isinstance(days, int) or days not in (1, 7) or (kind != "hot-kols" and days != 1):
+            raise InfluenceError("invalid_parameter", "Hot KOLs support days=1 or days=7; tweet rankings retain their source windows", 422)
         choice(kind, ("hot-kols", "hot-tweets", "rising-tweets"), "kind")
         choice(sector, ("ai", "web3"), "sector")
         choice(region, ("cn", "en"), "region")
         if kind == "rising-tweets" and sector != "web3":
             raise InfluenceError("unsupported_combination", "Rising tweets cover Web3 only", 422)
         return await self._get("/api/v1/trending/" + kind, {"sector": sector, "region": region,
+                               **({"days": days} if kind == "hot-kols" else {}),
                                **({"limit": count(limit)} if limit is not None else {})})
 
     async def youtube_leaderboard(self, sector="web3", limit=10):
