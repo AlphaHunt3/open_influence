@@ -90,7 +90,7 @@ uv run influence-client capabilities
 # Free authenticated usage query (auth-billing service version)
 uv run influence-client usage
 
-# Leaderboards and trending lists cost 0 credits
+# KOL leaderboards and KOL trending lists cost 0 credits; hot/rising tweets cost 1 per nonempty request
 uv run influence-client youtube --sector ai --limit 10
 uv run influence-client square --limit 10
 uv run influence-client x --sector web3 --region cn --limit 10
@@ -126,7 +126,7 @@ asyncio.run(main())
 
 ## Credits, without surprises
 
-The auth-billing service implements **1 credit per returned account/channel**. Profiles, rank aggregates, profile history and ability models cost 1 per handle; Smart Followers costs actual returned accounts across both pools, social costs actual events across four types; all leaderboards and trending/weekly ranking lists cost0, including Pro Top500 (active Pro is still required). Errors, empty results, capabilities and usage queries cost 0. Repeated account-data reads still cost credits; rankings remain free, including with an exhausted balance.
+The auth-billing service implements **1 credit per returned account/channel**. Profiles, rank aggregates, profile history and ability models cost 1 per handle; Smart Followers costs actual returned accounts across both pools, social costs actual events across four types; KOL leaderboards, popular KOLs and weekly KOL lists cost0, including Pro Top500 (active Pro is still required); daily hot/rising tweet API/MCP requests cost1 credit per successful nonempty request on Free and Pro, independent of returned count. Errors, empty results, capabilities and usage queries cost 0. Repeated account-data reads still cost credits; rankings remain free, including with an exhausted balance.
 
 - Free monthly allowance: **1,000–8,000**, depending on XHunt rank; Google starts at **1,000**.
 - Pro: **$39/month for 30,000 credits**. Approved organizations can receive extra free-plan credits.
@@ -151,6 +151,6 @@ Pro Top500: `uv run influence-client pro --platform x --sector ai --region cn --
 
 Wheel installation is checked independently from editable imports: CLI entrypoint, Python SDK and an actual stdio MCP initialize/list/call exchange. CI runs the offline variant without data requests; isolated live verification additionally checks all three platforms, Pro denial and the actual credit ledger. See [verification instructions](docs/verification.md#wheel-installation).
 
-Per-group limits: Free10/Pro40 for smart followers, social, circle, ability attached tweets, hot lists, all weekly lists and profile history. Free unfollowing/unfollowed events must be older than72 hours; Pro has no plan time cutoff. Main influence lists stay Free100/Pro500. Limits use server-verified entitlement; omit optional limits for the plan maximum, or request fewer. No ranking or hot/weekly list spends credits. The website shows hot/weekly lists; account detail lists and ability tweets remain API/MCP only.
+Per-group limits: Free10/Pro40 for smart followers, social, circle, ability attached tweets, hot lists, all weekly lists and profile history. Free unfollowing/unfollowed events must be older than72 hours; Pro has no plan time cutoff. Main influence lists stay Free100/Pro500. Limits use server-verified entitlement; omit optional limits for the plan maximum, or request fewer. KOL rankings and hot/weekly KOL lists spend no credits. Daily hot/rising tweet API/MCP calls cost1 credit per successful nonempty request, regardless of returned count; website browsing remains free. The website shows hot/weekly lists; account detail lists and ability tweets remain API/MCP only.
 
 Popular KOLs (`days=1` daily or `days=7` weekly source engagement) and popular tweets (24-hour source score) cover AI/Web3 cn/en pools. Rising tweets preserve the existing age-calibrated view-velocity rank and cover Web3 only. Use `get_hot_kols`, `get_hot_tweets`, `get_rising_tweets`, or Python `client.hot(kind=...)`. X abilities include recovered evidence under `model.cn.evidence[domain]` and `model.en.evidence[domain]`: original post IDs, author, text, links, review reason and analysis provenance. Inspect each group's `status` (`available`, `missing`, `posts_unavailable`) and `meta.evidence_source_status` separately. Free10/Pro40 applies independently per language/domain; the whole model still costs one credit. Historical coverage is partial and archived posts may no longer be accessible on X. Never infer evidence from unrelated recent posts.

@@ -17,7 +17,7 @@ uv --directory "$INFLUENCE_CLIENT_DIR" run --locked influence-client youtube --s
 uv --directory "$INFLUENCE_CLIENT_DIR" run --locked influence-client square --limit 10
 ```
 
-Read capabilities before claiming coverage. Fetch at most10 rows initially unless the user requests more; public ranking cap100, Pro cap500. All leaderboards and trending/weekly rankings cost0credits; active Pro is still required for Top500. Other returned account data costs1credit per account/event; one profile/model costs1. Errors/empty lists/capabilities/usage cost0. Local `_client.credits_charged` preserves the actual response header; null means unknown. Hosted main influence defaults are100, Pro500; weekly/detail lists use plan limits: explicitly send limit10. Local `get_usage` wraps REST `/api/v1/usage`; hosted MCP currently does not expose it.
+Read capabilities before claiming coverage. Fetch at most10 rows initially unless the user requests more; public ranking cap100, Pro cap500. KOL leaderboards, popular KOLs and weekly KOL lists cost0credits; active Pro is still required for Top500. Daily hot/rising tweet API/MCP calls cost1credit per successful nonempty request on Free and Pro regardless of returned count; website browsing remains free. Other returned account data costs1credit per account/event; one profile/model costs1. Errors/empty lists/capabilities/usage cost0. Local `_client.credits_charged` preserves the actual response header; null means unknown. Hosted main influence defaults are100, Pro500; weekly/detail lists use plan limits: explicitly send limit10. Local `get_usage` wraps REST `/api/v1/usage`; hosted MCP currently does not expose it.
 
 Select the correct measure:
 
@@ -53,6 +53,6 @@ All limits are verified against the actual account entitlement. Omit `limit` for
 | Weekly attention/entries, weekly rank gains, Square weekly trends |5|40|
 | Profile history (newest first) |5|40|
 
-Each pool/event type/language group is counted independently. The main influence lists remain Free100/Pro500. All rankings, weekly and hot lists cost0 credits, including Pro. Account details retain their published billing. A cap does not promise sufficient source coverage.
+Each pool/event type/language group is counted independently. The main influence lists remain Free100/Pro500. All KOL rankings, weekly KOL lists and hot KOL lists cost0 credits, including Pro. Daily hot/rising tweet API/MCP calls cost1credit per successful nonempty request; empty results and failures cost0. Account details retain their published billing. A cap does not promise sufficient source coverage.
 
 Hot tools: `get_hot_kols`, `get_hot_tweets`, `get_rising_tweets`; REST `/api/v1/trending/hot-kols`, `/hot-tweets`, `/rising-tweets`. cn/en pools only, preserving source order. Hot KOLs use the existing engagement score: `days=1` for daily (Free10/Pro40), `days=7` for weekly (Free5/Pro40); hot tweets use the existing 24-hour score. Rising tweets use the existing age-calibrated observed view-velocity rank (source candidate/observation windows), Web3 only. AI weekly attention is also unavailable. Do not substitute other sector data. Current published ability models contain scores and summaries without attached tweets; do not invent evidence tweets.

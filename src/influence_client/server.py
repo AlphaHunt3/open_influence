@@ -24,7 +24,7 @@ async def lifespan(_):
 
 server = FastMCP("XHunt Influence", lifespan=lifespan, instructions=(
     "Discover who matters across X, Binance Square and YouTube. First call get_capabilities; "
-    "get_usage and all leaderboard/trending queries cost zero credits. Default limit is10 for response size; other returned "
+    "get_usage and KOL leaderboard/trending queries cost zero credits. Daily hot/rising tweet calls cost 1 credit per successful nonempty request on Free and Pro, regardless of returned count; empty results and failures cost zero. Default limit is10 for response size; other returned "
     "accounts cost 1 credit each. Preserve metadata and _client.credits_charged. "
     "Scores across platforms are not comparable. Never equate X rank gain or attention "
     "with follower growth; new_entries includes re-entries. Respect insufficient_history. "
@@ -159,13 +159,13 @@ async def get_hot_kols(sector: Sector = "web3", region: Literal["cn", "en"] = "c
 
 @server.tool(annotations=READ_ONLY)
 async def get_hot_tweets(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None) -> dict:
-    """Existing source hot ranking. Free10/Pro40 per group, zero credits. Inspect definition/coverage; rising tweets Web3 only."""
+    """Daily tweet feed. Free10/Pro40 per group; 1 credit per successful nonempty API request on Free and Pro, regardless of returned count. Empty results and failures cost zero. Inspect source definition and coverage."""
     return await call("hot", kind="hot-tweets", sector=sector, region=region, limit=limit)
 
 
 @server.tool(annotations=READ_ONLY)
 async def get_rising_tweets(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None) -> dict:
-    """Existing source hot ranking. Free10/Pro40 per group, zero credits. Inspect definition/coverage; rising tweets Web3 only."""
+    """Daily tweet feed. Free10/Pro40 per group; 1 credit per successful nonempty API request on Free and Pro, regardless of returned count. Empty results and failures cost zero. Inspect source definition and coverage."""
     return await call("hot", kind="rising-tweets", sector=sector, region=region, limit=limit)
 
 

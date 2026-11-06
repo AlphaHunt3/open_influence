@@ -1,6 +1,6 @@
 # Tool and API reference
 
-Contract updated 2026-11-02. Check capabilities for current data coverage and provider availability. Local stdio exposes20 tools:19 hosted data/discovery tools plus `get_usage` (REST wrapper).
+Contract updated 2026-11-06. Check capabilities for current data coverage and provider availability. Local stdio exposes20 tools:19 hosted data/discovery tools plus `get_usage` (REST wrapper).
 
 Main influence limits: Free100/Pro500. Per-group detail/hot limits: Free10/Pro40. All weekly lists and profile history: Free10/Pro40. Optional detail/weekly/hot limits omitted use the server-verified plan maximum; larger requests are clamped, smaller requests respected. Main local rankings default10 for response size; hosted main rankings default100, Pro500. Social client maximum100, effective plan cap10/40 per event type.
 
@@ -26,8 +26,8 @@ Main influence limits: Free100/Pro500. Per-group detail/hot limits: Free10/Pro40
 | `get_youtube_leaderboard` | `/api/v1/youtube/leaderboard` | sector, limit | 0 |
 
 | `get_hot_kols` | `/api/v1/trending/hot-kols` | sector, cn/en region, days=1 or 7, optional limit | 0 |
-| `get_hot_tweets` | `/api/v1/trending/hot-tweets` | sector, cn/en region, optional limit | 0 |
-| `get_rising_tweets` | `/api/v1/trending/rising-tweets` | web3 sector, cn/en region, optional limit | 0 |
+| `get_hot_tweets` | `/api/v1/trending/hot-tweets` | sector, cn/en region, optional limit | 1 per successful nonempty request, Free and Pro |
+| `get_rising_tweets` | `/api/v1/trending/rising-tweets` | web3 sector, cn/en region, optional limit | 1 per successful nonempty request, Free and Pro |
 
 Popular KOLs preserve existing engagement ranks: days=1 daily (Free10/Pro40), days=7 weekly (Free10/Pro40); popular tweets preserve the24-hour source score. Rising tweets preserve the existing age-calibrated observed view-velocity rank, Web3 only. Source shortages remain visible; the current rising pool may supply20, not40. Published ability models currently do not attach tweets; attached tweet groups, if supplied, follow10/40. History is newest first.
 
