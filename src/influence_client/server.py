@@ -85,7 +85,7 @@ async def get_kol_ranks(handle: str) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 async def get_smart_followers(handle: str, sector: Sector = "web3", limit: Limit | None = None) -> dict:
-    """Free10/Pro40 global and Chinese KOL followers per sector, with known classifications. Actual returned accounts cost credits, up to80; international does not mean verified English."""
+    """Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries global and Chinese KOL followers per sector, with known classifications. Actual returned accounts cost credits, up to80; international does not mean verified English."""
     return await call("x_smart_followers", handle=handle, sector=sector, limit=limit)
 
 
@@ -97,19 +97,19 @@ async def get_kol_social(handle: str, limit: SocialLimit | None = None) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 async def get_kol_circle(handle: str, days: Annotated[int, Field(ge=1, le=30, strict=True)] = 7, limit: Limit | None = None) -> dict:
-    """Free10/Pro40 observed bilateral direct reply/quote/repost partners; default7 days. Each direction requires an interaction; costs actual returned accounts, up to40. Recorded partial coverage, not all X activity. Inspect status=stale_data and cache timestamps: snapshots can be up to one hour old; cached accounts retain normal billing. Only SQL statement timeouts return status=pending: retry the same tool after meta.retry_after_seconds. Pending responses cost no credits; bounded retry failure is an error."""
+    """Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries observed bilateral direct reply/quote/repost partners; default7 days. Each direction requires an interaction; costs actual returned accounts, up to40. Recorded partial coverage, not all X activity. Inspect status=stale_data and cache timestamps: snapshots can be up to one hour old; cached accounts retain normal billing. Only SQL statement timeouts return status=pending: retry the same tool after meta.retry_after_seconds. Pending responses cost no credits; bounded retry failure is an error."""
     return await call("x_circle", handle=handle, days=days, limit=limit)
 
 
 @server.tool(annotations=READ_ONLY)
 async def get_profile_history(handle: str, limit: Limit | None = None) -> dict:
-    """Recorded X profile snapshots and changed fields newest first (Free10/Pro40). One credit per handle; not complete lifetime history."""
+    """Recorded X profile snapshots and changed fields newest first (Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries). One credit per handle; not complete lifetime history."""
     return await call("x_profile_history", handle=handle, limit=limit)
 
 
 @server.tool(annotations=READ_ONLY)
 async def get_ability_model(handle: str, sector: Sector = "web3", limit: Limit | None = None) -> dict:
-    """Published X abilities >=85 with recovered analysis evidence and explicit missing/source status. One credit per model; Free10/Pro40 tweets per language/domain. Unavailable models may return 404."""
+    """Published X abilities >=85 with recovered analysis evidence and explicit missing/source status. One credit per model; Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries tweets per language/domain. Unavailable models may return 404."""
     return await call("x_abilities", handle=handle, sector=sector, limit=limit)
 
 
@@ -153,19 +153,19 @@ async def get_youtube_leaderboard(sector: Sector = "web3", limit: Limit = 10) ->
 
 @server.tool(annotations=READ_ONLY)
 async def get_hot_kols(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None, days: Literal[1, 7] = 1) -> dict:
-    """KOL engagement ranking: days=1 daily (Free10/Pro40), days=7 weekly (Free10/Pro40). Per regional pool, zero credits."""
+    """KOL engagement ranking: days=1 daily (Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries), days=7 weekly (Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries). Per regional pool, zero credits."""
     return await call("hot", kind="hot-kols", sector=sector, region=region, limit=limit, days=days)
 
 
 @server.tool(annotations=READ_ONLY)
 async def get_hot_tweets(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None) -> dict:
-    """Daily tweet feed. Free10/Pro40 per group; 1 credit per successful nonempty API request on Free and Pro, regardless of returned count. Empty results and failures cost zero. Inspect source definition and coverage."""
+    """Daily tweet feed. Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries per group; 1 credit per successful nonempty API request on Free and Pro, regardless of returned count. Empty results and failures cost zero. Inspect source definition and coverage."""
     return await call("hot", kind="hot-tweets", sector=sector, region=region, limit=limit)
 
 
 @server.tool(annotations=READ_ONLY)
 async def get_rising_tweets(sector: Sector = "web3", region: Literal["cn", "en"] = "cn", limit: Limit | None = None) -> dict:
-    """Daily tweet feed. Free10/Pro40 per group; 1 credit per successful nonempty API request on Free and Pro, regardless of returned count. Empty results and failures cost zero. Inspect source definition and coverage."""
+    """Daily tweet feed. Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries per group; 1 credit per successful nonempty API request on Free and Pro, regardless of returned count. Empty results and failures cost zero. Inspect source definition and coverage."""
     return await call("hot", kind="rising-tweets", sector=sector, region=region, limit=limit)
 
 

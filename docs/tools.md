@@ -2,7 +2,7 @@
 
 Contract updated 2026-11-06. Check capabilities for current data coverage and provider availability. Local stdio exposes20 tools:19 hosted data/discovery tools plus `get_usage` (REST wrapper).
 
-Main influence limits: Free100/Pro500. Per-group detail/hot limits: Free10/Pro40. All weekly lists and profile history: Free10/Pro40. Optional detail/weekly/hot limits omitted use the server-verified plan maximum; larger requests are clamped, smaller requests respected. Main local rankings default10 for response size; hosted main rankings default100, Pro500. Social client maximum100, effective plan cap10/40 per event type.
+Main influence limits: Free accounts can access up to 100 ranked accounts; Pro accounts can access up to 500. Per-group detail/hot limits: Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries. All weekly lists and profile history: Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries. Optional detail/weekly/hot limits omitted use the server-verified plan maximum; larger requests are clamped, smaller requests respected. Main local rankings default10 for response size; hosted main rankings default100, Pro500. Social client maximum100, effective plan cap10/40 per event type.
 
 | Local / hosted MCP tool | REST GET | Parameters | Credits |
 | --- | --- | --- | ---: |
@@ -15,7 +15,7 @@ Main influence limits: Free100/Pro500. Per-group detail/hot limits: Free10/Pro40
 | `get_kol_ranks` | `/api/v1/kols/{handle}/ranks` | handle | 1 |
 | `get_smart_followers` | `/api/v1/kols/{handle}/smart-followers` | handle, sector, limit | actual accounts across both pools, Free up to20 / Pro up to80 |
 | `get_kol_social` | `/api/v1/kols/{handle}/social` | handle, limit **per type** | actual events across four types, up to 4 × limit |
-| `get_kol_circle` | `/api/v1/kols/{handle}/circle` | handle, days=7 (1–30), limit | actual partners, Free10/Pro40 |
+| `get_kol_circle` | `/api/v1/kols/{handle}/circle` | handle, days=7 (1–30), limit | actual partners, Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries |
 | `get_profile_history` | `/api/v1/kols/{handle}/profile-history` | handle, limit | 1 per handle |
 | `get_ability_model` | `/api/v1/kols/{handle}/abilities` | handle, sector, limit | 1 |
 | `get_weekly_kols` | `/api/v1/weekly/kols` | sector, region, mode, limit | 0 |
@@ -29,7 +29,7 @@ Main influence limits: Free100/Pro500. Per-group detail/hot limits: Free10/Pro40
 | `get_hot_tweets` | `/api/v1/trending/hot-tweets` | sector, cn/en region, optional limit | 1 per successful nonempty request, Free and Pro |
 | `get_rising_tweets` | `/api/v1/trending/rising-tweets` | web3 sector, cn/en region, optional limit | 1 per successful nonempty request, Free and Pro |
 
-Popular KOLs preserve existing engagement ranks: days=1 daily (Free10/Pro40), days=7 weekly (Free10/Pro40); popular tweets preserve the24-hour source score. Rising tweets preserve the existing age-calibrated observed view-velocity rank, Web3 only. Source shortages remain visible; the current rising pool may supply20, not40. Published ability models currently do not attach tweets; attached tweet groups, if supplied, follow10/40. History is newest first.
+Popular KOLs preserve existing engagement ranks: days=1 daily (Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries), days=7 weekly (Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries); popular tweets preserve the24-hour source score. Rising tweets preserve the existing age-calibrated observed view-velocity rank, Web3 only. Source shortages remain visible; the current rising pool may supply20, not40. Published ability models currently do not attach tweets; attached tweet groups, if supplied, follow10/40. History is newest first.
 
 The existing Square alias `/api/v1/leaderboards/binance-square` shares billing/rate counters with the canonical route. Sector is `ai` or `web3`; X region is `global`, `en` or `cn`. X handles accept an optional leading `@` in the client. Square UIDs come from leaderboard rows; they are not usernames or X handles.
 
