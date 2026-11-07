@@ -2,7 +2,7 @@
 
 Contract updated 2026-11-06. Check capabilities for current data coverage and provider availability. Local stdio exposes20 tools:19 hosted data/discovery tools plus `get_usage` (REST wrapper).
 
-Main influence limits: Free accounts can access up to 100 ranked accounts; Pro accounts can access up to 500. Per-group detail/hot limits: Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries. All weekly lists and profile history: Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries. Optional detail/weekly/hot limits omitted use the server-verified plan maximum; larger requests are clamped, smaller requests respected. Main local rankings default10 for response size; hosted main rankings default100, Pro500. Social client maximum100, effective plan cap10/40 per event type.
+Main influence limits: Free accounts can access up to 100 ranked accounts; Pro accounts can access up to 500. Per-group detail/hot limits: up to 10 entries on Free or 40 on Pro. All weekly lists and profile history: up to 10 entries on Free or 40 on Pro. Optional detail/weekly/hot limits omitted use the server-verified plan maximum; larger requests are clamped, smaller requests respected. Main local rankings default10 for response size; hosted main rankings default100, Pro500. Social client maximum100, effective plan cap10/40 per event type.
 
 | Local / hosted MCP tool | REST GET | Parameters | Credits |
 | --- | --- | --- | ---: |
@@ -13,9 +13,9 @@ Main influence limits: Free accounts can access up to 100 ranked accounts; Pro a
 | `get_pro_leaderboard` | `/api/v1/pro/leaderboards/{platform}` | platform=x/binance-square/youtube, sector, region (X only), limit | 0; active Pro required |
 | `get_kol_profile` | `/api/v1/kols/{handle}` | X handle | 1 |
 | `get_kol_ranks` | `/api/v1/kols/{handle}/ranks` | handle | 1 |
-| `get_smart_followers` | `/api/v1/kols/{handle}/smart-followers` | handle, sector, limit | actual accounts across both pools, Free up to20 / Pro up to80 |
+| `get_smart_followers` | `/api/v1/kols/{handle}/smart-followers` | handle, sector, limit | actual accounts across global, Chinese and Top100 pools; up to30 accounts on Free or120 on Pro |
 | `get_kol_social` | `/api/v1/kols/{handle}/social` | handle, limit **per type** | actual events across four types, up to 4 × limit |
-| `get_kol_circle` | `/api/v1/kols/{handle}/circle` | handle, days=7 (1–30), limit | actual partners, Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries |
+| `get_kol_circle` | `/api/v1/kols/{handle}/circle` | handle, days=7 (1–30), limit | actual partners, up to 10 entries on Free or 40 on Pro |
 | `get_profile_history` | `/api/v1/kols/{handle}/profile-history` | handle, limit | 1 per handle |
 | `get_ability_model` | `/api/v1/kols/{handle}/abilities` | handle, sector, limit | 1 |
 | `get_weekly_kols` | `/api/v1/weekly/kols` | sector, region, mode, limit | 0 |
@@ -29,7 +29,7 @@ Main influence limits: Free accounts can access up to 100 ranked accounts; Pro a
 | `get_hot_tweets` | `/api/v1/trending/hot-tweets` | sector, cn/en region, optional limit | 1 per successful nonempty request, Free and Pro |
 | `get_rising_tweets` | `/api/v1/trending/rising-tweets` | web3 sector, cn/en region, optional limit | 1 per successful nonempty request, Free and Pro |
 
-Popular KOLs preserve existing engagement ranks: days=1 daily (Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries), days=7 weekly (Free accounts receive up to 10 entries; Pro accounts receive up to 40 entries); popular tweets preserve the24-hour source score. Rising tweets preserve the existing age-calibrated observed view-velocity rank, Web3 only. Source shortages remain visible; the current rising pool may supply20, not40. Published ability models currently do not attach tweets; attached tweet groups, if supplied, follow10/40. History is newest first.
+Popular KOLs preserve existing engagement ranks: days=1 daily (up to 10 entries on Free or 40 on Pro), days=7 weekly (up to 10 entries on Free or 40 on Pro); popular tweets preserve the24-hour source score. Rising tweets preserve the existing age-calibrated observed view-velocity rank, Web3 only. Source shortages remain visible; the current rising pool may supply20, not40. Ability models include recovered original-post evidence where available, with up to 10 tweets per language/domain on Free or 40 on Pro; check evidence status for missing historical data. History is newest first.
 
 The existing Square alias `/api/v1/leaderboards/binance-square` shares billing/rate counters with the canonical route. Sector is `ai` or `web3`; X region is `global`, `en` or `cn`. X handles accept an optional leading `@` in the client. Square UIDs come from leaderboard rows; they are not usernames or X handles.
 
@@ -38,7 +38,7 @@ The existing Square alias `/api/v1/leaderboards/binance-square` shares billing/r
 | Feature | Exact meaning | Restrictions |
 | --- | --- | --- |
 | X `kind=weekly_growth` | Previous rank minus current rank over approximately seven days | AI/Web3, global/en/cn; inspect actual available count |
-| X `mode=attention` | New attention from the monitored KOL network | Web3 only, cn/en only; not raw follower-count growth |
+| X `mode=attention` | New attention from the monitored KOL network | AI/Web3, cn/en; weighted new Smart Follower attention, not raw follower-count growth |
 | X `mode=new_entries` | Current Top200 minus a comparable seven-day baseline | Includes re-entries; returns insufficient_history until a baseline exists |
 | Square `metric=followers` | Absolute net total follower gain over seven days | Current influence Top1000; requires measured counts at both ends |
 | Square `metric=smart_followers` | Absolute net gain in monitored source accounts following the KOL | Same candidate pool; source pool must be comparable |
@@ -72,9 +72,9 @@ Lists preserve `{items, meta}` plus optional `status`/`reason`. Profiles/models 
 
 ## Coverage boundaries
 
-X profiles include recorded current profile fields and known person/project and Chinese/international classifications. Six-rank aggregates include project ranks when available, with population counts from fresh completed source cohorts when configured (`kol_count_scope=ranked_accounts_including_projects`). Missing/stale snapshots remain `kol_count=null`; inspect `kol_count_status` and timestamps. This publisher requires separate deployment/configuration. Smart Followers preserves the source ordering, at most 10 per global/cn pool per sector, with unknown classifications left null. International classification does not verify English language.
+X profiles include recorded current profile fields and known person/project and Chinese/international classifications. Six-rank aggregates include project ranks when available, with population counts from fresh completed source cohorts when configured (`kol_count_scope=ranked_accounts_including_projects`). Missing/stale snapshots remain `kol_count=null`; inspect `kol_count_status` and timestamps. This publisher requires separate deployment/configuration. Smart Followers preserves the source ordering, at most 10 per global/cn/top pool per sector, with unknown classifications left null. International classification does not verify English language.
 
-Social covers monitored following, followed, unfollowing and unfollowed events. The limit is per event type, not a time window. Unfollows cover approximately the last hour; follow records use the source's recent-observation filter. Missing arrays are unavailable, not evidence of no activity. Profile history is recorded snapshots in source order, not lifetime coverage or inferred effective change times.
+Social covers monitored following, followed, unfollowing and unfollowed events. The limit is per event type, not a time window. Free unfollow records must be older than 72 hours; Pro has no plan time cutoff. The source's one-hour check is a confirmation delay, not a history retention window. Missing arrays are unavailable, not evidence of no activity. Profile history is recorded snapshots, newest first, not lifetime coverage or inferred effective change times.
 
 A complete Following KOLs list, raw timelines/tweet search and cross-platform identity matching remain unavailable.
 
