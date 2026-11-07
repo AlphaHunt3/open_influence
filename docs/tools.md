@@ -2,7 +2,7 @@
 
 Contract updated 2026-11-06. Check capabilities for current data coverage and provider availability. Local stdio exposes20 tools:19 hosted data/discovery tools plus `get_usage` (REST wrapper).
 
-Main influence limits: Free accounts can access up to 100 ranked accounts; Pro accounts can access up to 500. Per-group detail/hot limits: up to 10 entries on Free or 40 on Pro. All weekly lists and profile history: up to 10 entries on Free or 40 on Pro. Optional detail/weekly/hot limits omitted use the server-verified plan maximum; larger requests are clamped, smaller requests respected. Main local rankings default10 for response size; hosted main rankings default100, Pro500. Social client maximum100, effective plan cap10/40 per event type.
+Main influence limits: Free accounts can access up to 100 ranked accounts; Pro accounts can access up to 500. Per-group detail/hot limits: up to 10 entries on Free or 40 on Pro. All weekly lists and profile history: up to 10 entries on Free or 40 on Pro. Optional detail/weekly/hot limits omitted use the server-verified plan maximum; larger requests are clamped, smaller requests respected. Main local rankings default10 for response size; hosted main rankings default100, Pro500. Social client maximum100, an effective cap of 10 events per type on Free or 40 on Pro.
 
 | Local / hosted MCP tool | REST GET | Parameters | Credits |
 | --- | --- | --- | ---: |

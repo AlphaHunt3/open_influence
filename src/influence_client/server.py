@@ -85,7 +85,7 @@ async def get_kol_ranks(handle: str) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 async def get_smart_followers(handle: str, sector: Sector = "web3", limit: Limit | None = None) -> dict:
-    """up to 10 entries on Free or 40 on Pro in each global, Chinese and Top100 KOL follower group per sector, with known classifications. Actual returned accounts cost credits, up to80; international does not mean verified English."""
+    """Up to 10 entries on Free or 40 on Pro in each global, Chinese and Top100 KOL follower group per sector, with known classifications. Each returned account costs 1 credit; the three groups together return at most 30 accounts on Free or 120 on Pro; international does not mean verified English."""
     return await call("x_smart_followers", handle=handle, sector=sector, limit=limit)
 
 
@@ -97,7 +97,7 @@ async def get_kol_social(handle: str, limit: SocialLimit | None = None) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 async def get_kol_circle(handle: str, days: Annotated[int, Field(ge=1, le=30, strict=True)] = 7, limit: Limit | None = None) -> dict:
-    """up to 10 entries on Free or 40 on Pro observed bilateral direct reply/quote/repost partners; default7 days. Each direction requires an interaction; costs actual returned accounts, up to40. Recorded partial coverage, not all X activity. Inspect status=stale_data and cache timestamps: snapshots can be up to one hour old; cached accounts retain normal billing. Only SQL statement timeouts return status=pending: retry the same tool after meta.retry_after_seconds. Pending responses cost no credits; bounded retry failure is an error."""
+    """Up to 10 entries on Free or 40 on Pro observed bilateral direct reply/quote/repost partners; default7 days. Each direction requires an interaction; costs actual returned accounts, up to40. Recorded partial coverage, not all X activity. Inspect status=stale_data and cache timestamps: snapshots can be up to one hour old; cached accounts retain normal billing. Only SQL statement timeouts return status=pending: retry the same tool after meta.retry_after_seconds. Pending responses cost no credits; bounded retry failure is an error."""
     return await call("x_circle", handle=handle, days=days, limit=limit)
 
 
@@ -109,7 +109,7 @@ async def get_profile_history(handle: str, limit: Limit | None = None) -> dict:
 
 @server.tool(annotations=READ_ONLY)
 async def get_ability_model(handle: str, sector: Sector = "web3", limit: Limit | None = None) -> dict:
-    """Published X abilities >=85 with recovered analysis evidence and explicit missing/source status. One credit per model; up to 10 entries on Free or 40 on Pro tweets per language/domain. Unavailable models may return 404."""
+    """Published X abilities >=85 with recovered analysis evidence and explicit missing/source status. One credit per model; Each language/domain includes up to 10 evidence tweets on Free or 40 on Pro. Unavailable models may return 404."""
     return await call("x_abilities", handle=handle, sector=sector, limit=limit)
 
 
