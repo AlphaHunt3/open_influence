@@ -1,0 +1,13 @@
+"""Public region contracts; descriptions reflect existing source pools."""
+REGIONS = ["global", "en", "cn"]
+POOLS = ["en", "cn"]
+AUTHOR = "Region semantics: author_language (source account pools). X en is the upstream international/non-Chinese-classified pool, not verified English; cn is Chinese-classified; global is the combined all pool, not a guaranteed exact union."
+AUDIENCE = "Region semantics: audience. en/cn select the international/Chinese KOL attention pools, not a guarantee of the returned KOL or tweet language; no combined global pool. Source-specific candidate and text-language filters also apply."
+WEEKLY = AUDIENCE + " Weekly attention counts newly observed Smart Followers; AI also restricts targets to the regional AI candidate pool and target Chinese classification. mode=new_entries instead uses author_language; hosted MCP retains its cn/en schema. REST accepts global only with mode=new_entries."
+SQUARE = "Region semantics: author_language. Filter published account.language before limiting, not geography: en includes en-*; cn includes cn, zh and zh-*; global includes all published languages and unknowns, not only the en/cn union."
+YOUTUBE = "Region semantics: author_language (unsplit published channel pool). Only global is supported; no channel-language filter is applied."
+PRO = AUTHOR + " X supports global/en/cn. Binance Square supports global/en/cn: " + SQUARE.removeprefix("Region semantics: author_language. ") + " YouTube: " + YOUTUBE.removeprefix("Region semantics: author_language (unsplit published channel pool). ")
+HOT_SECTOR = 'Sector selects the web3/ai KOL circle that surfaced the tweet, not content relevance. Filter tweet.ai.domain_tag by exact raw values: web3 content uses "crypto", AI content uses "ai". All values: "crypto", "ai", "科技", "金融", "内容创作", "抽奖", "其他". These values are identical in cn/en pools; English display labels are not API values. Missing classification is unknown.'
+RISING_SECTOR = "Sector uses AI domain classification with post, author, linked/media and conversation context where available, not text-only relevance. Web3 admits crypto-labeled posts; account context or a relevant conversation can qualify a post. AI uses its own classified pool. AI selection can misclassify; sector does not guarantee every post is on topic."
+RISING_REGION = AUDIENCE + " For rising tweets, audience is a source-scope label, not viewer-language attribution: the metric is observed view velocity, and recall can include authors outside ranked KOL pools. Sources additionally filter normalized text for Chinese vs non-Chinese; non-Chinese does not mean English."
+

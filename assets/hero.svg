@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="title desc">
+<title id="title">Influence MCP</title><desc id="desc">Discover who matters in AI and Web3 across X, Binance Square and YouTube.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#102e29"/><stop offset="1" stop-color="#071a18"/></linearGradient><radialGradient id="glow"><stop stop-color="#c6f581" stop-opacity=".18"/><stop offset="1" stop-color="#c6f581" stop-opacity="0"/></radialGradient></defs>
+<rect width="1200" height="440" rx="24" fill="url(#bg)"/><circle cx="970" cy="160" r="260" fill="url(#glow)"/>
+<g fill="none" stroke="#456555" stroke-width="1"><path d="M760 110 1030 160 875 300 760 110 1020 335 1030 160"/><path d="M1030 160 1120 270 1020 335 875 300"/></g>
+<g fill="#c6f581"><circle cx="760" cy="110" r="8"/><circle cx="1030" cy="160" r="12"/><circle cx="875" cy="300" r="10"/><circle cx="1020" cy="335" r="7"/><circle cx="1120" cy="270" r="6"/></g>
+<g font-family="system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+<text x="62" y="70" fill="#c6f581" font-size="15" letter-spacing="3">XHUNT / INFLUENCE INTELLIGENCE</text>
+<text x="60" y="152" fill="#f3f8ed" font-size="64" font-weight="700">Influence MCP</text>
+<text x="64" y="211" fill="#f3f8ed" font-size="27">Give your agent a map of who matters.</text>
+<text x="64" y="253" fill="#a7bcae" font-size="20">AI + Web3 creators. Three platforms. One connection.</text>
+<g font-size="17" fill="#e5f0de"><rect x="64" y="300" width="65" height="43" rx="10" fill="#234338"/><text x="89" y="328">X</text><rect x="141" y="300" width="186" height="43" rx="10" fill="#234338"/><text x="158" y="328">Binance Square</text><rect x="339" y="300" width="125" height="43" rx="10" fill="#234338"/><text x="362" y="328">YouTube</text></g>
+<text x="64" y="393" fill="#93aa9b" font-size="15">MCP server · Python client · CLI · Agent Skill</text>
+</g></svg>

@@ -1,0 +1,14 @@
+name: Share a research recipe
+description: Help agents get useful results with fewer calls.
+body:
+  - type: textarea
+    id: prompt
+    attributes:
+      label: What would you ask your agent?
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Tools, maximum credits and expected output
+      description: Use supported endpoints and keep source timestamps. Do not include private keys or collected personal data.
